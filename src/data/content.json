@@ -1,0 +1,80 @@
+
+{
+  "hero": {
+    "title": "Transforme seu Negócio com",
+    "highlight": "Agentes IA Personalizados",
+    "subtitle": "Automação inteligente que trabalha 24/7, reduz custos em até 80% e escala seu atendimento sem limites.",
+    "ctaText": "Fale Conosco",
+    "ctaWhatsapp": "https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa."
+  },
+  "about": {
+    "title": "Sobre a Deylith.dev",
+    "description": "Somos especialistas em criar agentes de IA personalizados que automatizam processos, otimizam atendimento e impulsionam resultados. Nossa missão é trazer clareza e eficiência para seu negócio através da inteligência artificial.",
+    "values": [
+      {
+        "title": "Inovação",
+        "description": "Sempre na vanguarda da tecnologia IA"
+      },
+      {
+        "title": "Personalização",
+        "description": "Cada solução é única para seu negócio"
+      },
+      {
+        "title": "Resultados",
+        "description": "Foco em ROI e métricas reais"
+      }
+    ]
+  },
+  "services": {
+    "title": "O que Fazemos",
+    "subtitle": "Soluções completas em automação e IA",
+    "items": [
+      {
+        "title": "Atendimento Automatizado",
+        "description": "Chatbots inteligentes que respondem clientes 24/7 com a mesma qualidade de um atendente humano.",
+        "icon": "messageCircle"
+      },
+      {
+        "title": "SDR Virtual",
+        "description": "Agentes que qualificam leads, agendam reuniões e nutrem prospects automaticamente.",
+        "icon": "target"
+      },
+      {
+        "title": "Automação de Processos",
+        "description": "Automatizamos tarefas repetitivas como emissão de boletos, follow-ups e relatórios.",
+        "icon": "settings"
+      },
+      {
+        "title": "Assistente Inteligente",
+        "description": "IA que ajuda sua equipe com informações, agendamentos e gerenciamento de tarefas.",
+        "icon": "brain"
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Por que Escolher Agentes IA?",
+    "subtitle": "Vantagens comprovadas para empresas de todos os portes",
+    "items": [
+      {
+        "title": "Economia de até 80%",
+        "description": "Reduza custos operacionais significativamente",
+        "percentage": "80%"
+      },
+      {
+        "title": "Disponibilidade 24/7",
+        "description": "Atendimento contínuo, sem pausas ou feriados",
+        "percentage": "100%"
+      },
+      {
+        "title": "Escalabilidade Infinita",
+        "description": "Atenda milhares de clientes simultaneamente",
+        "percentage": "∞"
+      },
+      {
+        "title": "ROI em 6 meses",
+        "description": "Retorno garantido do investimento",
+        "percentage": "6x"
+      }
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+
+{
+  "costComparison": [
+    {
+      "category": "Funcionário CLT",
+      "salario": 3500,
+      "beneficios": 1200,
+      "encargos": 1400,
+      "total": 6100,
+      "availability": "8h/dia"
+    },
+    {
+      "category": "Agente IA",
+      "salario": 0,
+      "beneficios": 0,
+      "encargos": 500,
+      "total": 500,
+      "availability": "24h/dia"
+    }
+  ],
+  "productivity": [
+    {
+      "sector": "E-commerce",
+      "timeBeforeIA": 120,
+      "timeAfterIA": 15,
+      "improvement": 87.5
+    },
+    {
+      "sector": "Clínicas",
+      "timeBeforeIA": 45,
+      "timeAfterIA": 5,
+      "improvement": 88.9
+    },
+    {
+      "sector": "Imobiliárias",
+      "timeBeforeIA": 90,
+      "timeAfterIA": 10,
+      "improvement": 88.9
+    },
+    {
+      "sector": "Consultorias",
+      "timeBeforeIA": 60,
+      "timeAfterIA": 8,
+      "improvement": 86.7
+    }
+  ],
+  "roi": [
+    {
+      "month": "Mês 1",
+      "investment": -5000,
+      "savings": 1200,
+      "net": -3800
+    },
+    {
+      "month": "Mês 2",
+      "investment": 0,
+      "savings": 2400,
+      "net": -1400
+    },
+    {
+      "month": "Mês 3",
+      "investment": 0,
+      "savings": 3600,
+      "net": 2200
+    },
+    {
+      "month": "Mês 4",
+      "investment": 0,
+      "savings": 4800,
+      "net": 7000
+    },
+    {
+      "month": "Mês 5",
+      "investment": 0,
+      "savings": 6000,
+      "net": 13000
+    },
+    {
+      "month": "Mês 6",
+      "investment": 0,
+      "savings": 7200,
+      "net": 20200
+    }
+  ]
+}

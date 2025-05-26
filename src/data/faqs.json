@@ -1,0 +1,33 @@
+
+[
+  {
+    "id": 1,
+    "pergunta": "O que é um agente IA?",
+    "resposta": "É um sistema inteligente que simula ações humanas repetitivas, como atendimento, agendamento e suporte, disponível 24h por dia. Nossos agentes são personalizados para cada negócio."
+  },
+  {
+    "id": 2,
+    "pergunta": "Preciso saber programar para usar um agente IA?",
+    "resposta": "Não! Nós entregamos tudo pronto e personalizado para o seu negócio, com suporte contínuo. Você só precisa nos contar como funciona sua empresa."
+  },
+  {
+    "id": 3,
+    "pergunta": "Quanto tempo leva para implementar?",
+    "resposta": "Normalmente entre 7 a 21 dias, dependendo da complexidade. Agentes simples podem estar funcionando em uma semana."
+  },
+  {
+    "id": 4,
+    "pergunta": "Quanto custa um agente IA comparado a um funcionário?",
+    "resposta": "Um agente IA custa em média 70-80% menos que um funcionário CLT, trabalha 24/7 sem férias ou benefícios, e não comete erros por cansaço."
+  },
+  {
+    "id": 5,
+    "pergunta": "O agente substitui completamente funcionários?",
+    "resposta": "Não necessariamente. Ele automatiza tarefas repetitivas, liberando sua equipe para atividades mais estratégicas e criativas. É um complemento inteligente."
+  },
+  {
+    "id": 6,
+    "pergunta": "Funciona para qualquer tipo de empresa?",
+    "resposta": "Sim! Já implementamos soluções para e-commerce, clínicas, escritórios, imobiliárias, consultorias e muito mais. Cada agente é único."
+  }
+]
