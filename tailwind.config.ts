@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,22 +65,22 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Cores tech inspiradas no arco-íris/Instagram
+				// Cores modernas inspiradas no Instagram
 				tech: {
 					purple: '#8B5CF6',
 					pink: '#EC4899',
 					orange: '#F97316',
-					blue: '#3B82F6',
+					blue: '#6366F1',
 					cyan: '#06B6D4',
 					emerald: '#10B981',
 				}
 			},
 			backgroundImage: {
-				'tech-gradient': 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 25%, #F97316 50%, #EAB308 75%, #10B981 100%)',
-				'tech-gradient-dark': 'linear-gradient(135deg, #6D28D9 0%, #BE185D 25%, #C2410C 50%, #A16207 75%, #047857 100%)',
+				'tech-gradient': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #10B981 100%)',
+				'tech-gradient-dark': 'linear-gradient(135deg, #4338CA 0%, #7C3AED 25%, #BE185D 50%, #EA580C 75%, #059669 100%)',
 				'hero-gradient': 'linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 25%, #FEF3C7 50%, #FED7AA 75%, #FECACA 100%)',
-				'hero-gradient-dark': 'linear-gradient(135deg, #0F0F23 0%, #1E1B4B 25%, #581C87 50%, #7C2D12 75%, #991B1B 100%)',
-				'neon-grid': 'linear-gradient(90deg, transparent 98%, rgba(168, 85, 247, 0.3) 100%), linear-gradient(180deg, transparent 98%, rgba(168, 85, 247, 0.3) 100%)',
+				'hero-gradient-dark': 'linear-gradient(135deg, #0F172A 0%, #1E1B4B 25%, #581C87 50%, #7C2D12 75%, #991B1B 100%)',
+				'neon-grid': 'linear-gradient(90deg, transparent 98%, rgba(99, 102, 241, 0.3) 100%), linear-gradient(180deg, transparent 98%, rgba(99, 102, 241, 0.3) 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

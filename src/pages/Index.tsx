@@ -52,8 +52,8 @@ const Index = () => {
         <main>
           <Hero />
           
-          {/* About section with different background */}
-          <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
+          {/* About section with purple/pink gradient */}
+          <section className="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-orange-900/30">
             <About />
           </section>
           
@@ -61,8 +61,8 @@ const Index = () => {
           <Benefits />
           <Charts />
           
-          {/* Use Cases section with different background */}
-          <section className="py-16 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20">
+          {/* Use Cases section with blue/cyan gradient */}
+          <section className="py-16 bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 dark:from-blue-900/30 dark:via-cyan-900/30 dark:to-emerald-900/30">
             <UseCases />
           </section>
           
@@ -83,8 +83,8 @@ const Index = () => {
           <FAQ />
         </main>
         
-        {/* Footer with different background */}
-        <div className="bg-gradient-to-br from-slate-900 to-blue-900">
+        {/* Footer with modern gradient inspired by Instagram */}
+        <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-pink-900 dark:from-slate-950 dark:via-purple-950 dark:to-pink-950">
           <Footer />
         </div>
         

@@ -7,8 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3, Palette, MessageCircle, Download } from 'lucide-react';
+import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import ThemeSettingsComponent from '../components/admin/ThemeSettings';
+import ChatSettingsComponent from '../components/admin/ChatSettings';
 
 interface FAQ {
   id: number;
@@ -100,14 +102,14 @@ const Admin = () => {
     availability: '24/7'
   });
   const [themeSettings, setThemeSettings] = useState<ThemeSettings>({
-    primaryColor: '#1e40af',
-    secondaryColor: '#3b82f6',
-    gradientStart: '#3b82f6',
+    primaryColor: '#6366f1',
+    secondaryColor: '#8b5cf6',
+    gradientStart: '#6366f1',
     gradientEnd: '#8b5cf6',
     neonEnabled: true,
-    robotPrimaryColor: '#1e40af',
-    robotSecondaryColor: '#3b82f6',
-    techTertiary: '#22c55e'
+    robotPrimaryColor: '#6366f1',
+    robotSecondaryColor: '#8b5cf6',
+    techTertiary: '#10b981'
   });
   const [chatSettings, setChatSettings] = useState<ChatSettings>({
     enabled: true,
@@ -279,14 +281,16 @@ const Admin = () => {
   };
 
   const downloadLogo = () => {
-    // Create SVG logo
+    // Create SVG logo with Instagram-inspired gradient
     const svg = `
       <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" width="240" height="80">
         <defs>
           <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+            <stop offset="25%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
+            <stop offset="75%" style="stop-color:#f97316;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
           </linearGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -853,135 +857,21 @@ const Admin = () => {
 
             {/* Theme Tab */}
             <TabsContent value="theme" className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Personalização Visual</h2>
-                <Button onClick={saveThemeSettings} variant="outline" className="neon-glow">
-                  <Save className="w-4 h-4 mr-2" />
-                  Salvar Tema
-                </Button>
-              </div>
+              <ThemeSettingsComponent
+                themeSettings={themeSettings}
+                setThemeSettings={setThemeSettings}
+                onSave={saveThemeSettings}
+              />
+            </TabsContent>
 
-              <div className="grid gap-6">
-                <Card className="glass-effect tech-card">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Palette className="w-5 h-5" />
-                      Cores Principais
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="grid gap-4 md:grid-cols-3">
-                    <div>
-                      <Label>Cor Primária</Label>
-                      <Input
-                        type="color"
-                        value={themeSettings.primaryColor}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, primaryColor: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <Label>Cor Secundária</Label>
-                      <Input
-                        type="color"
-                        value={themeSettings.secondaryColor}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, secondaryColor: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <Label>Cor Terciária</Label>
-                      <Input
-                        type="color"
-                        value="#22c55e"
-                        onChange={(e) => {
-                          document.documentElement.style.setProperty('--tech-tertiary', e.target.value);
-                        }}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="glass-effect tech-card">
-                  <CardHeader>
-                    <CardTitle>Robô Virtual</CardTitle>
-                  </CardHeader>
-                  <CardContent className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <Label>Cor Primária do Robô</Label>
-                      <Input
-                        type="color"
-                        value={themeSettings.robotPrimaryColor}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, robotPrimaryColor: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <Label>Cor Secundária do Robô</Label>
-                      <Input
-                        type="color"
-                        value={themeSettings.robotSecondaryColor}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, robotSecondaryColor: e.target.value })}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="glass-effect tech-card">
-                  <CardHeader>
-                    <CardTitle>Efeitos Visuais</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="neon-effects"
-                        checked={themeSettings.neonEnabled}
-                        onCheckedChange={(checked) => setThemeSettings({ ...themeSettings, neonEnabled: checked })}
-                      />
-                      <Label htmlFor="neon-effects">Ativar Efeitos Neon</Label>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="glass-effect tech-card">
-                  <CardHeader>
-                    <CardTitle>Conteúdo do Rodapé</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <Label>Descrição da Empresa</Label>
-                      <Textarea
-                        value={footerContent.description}
-                        onChange={(e) => setFooterContent({ ...footerContent, description: e.target.value })}
-                        rows={3}
-                      />
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Título da Seção Serviços</Label>
-                        <Input
-                          value={footerContent.servicesTitle}
-                          onChange={(e) => setFooterContent({ ...footerContent, servicesTitle: e.target.value })}
-                        />
-                      </div>
-                      <div>
-                        <Label>Título da Seção Contato</Label>
-                        <Input
-                          value={footerContent.contactTitle}
-                          onChange={(e) => setFooterContent({ ...footerContent, contactTitle: e.target.value })}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Texto de Copyright</Label>
-                      <Input
-                        value={footerContent.copyright}
-                        onChange={(e) => setFooterContent({ ...footerContent, copyright: e.target.value })}
-                      />
-                    </div>
-                    <Button onClick={saveFooterContent} className="daylight-gradient">
-                      <Save className="w-4 h-4 mr-2" />
-                      Salvar Rodapé
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
+            {/* Settings Tab */}
+            <TabsContent value="settings" className="space-y-4">
+              <ChatSettingsComponent
+                chatSettings={chatSettings}
+                setChatSettings={setChatSettings}
+                onSave={saveChatSettings}
+                onDownloadLogo={downloadLogo}
+              />
             </TabsContent>
 
             {/* New Custom Sections Tab */}
@@ -1068,96 +958,6 @@ const Admin = () => {
                   </Card>
                 ))}
               </div>
-            </TabsContent>
-
-            {/* Settings Tab */}
-            <TabsContent value="settings" className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Configurações</h2>
-                <div className="flex gap-2">
-                  <Button onClick={downloadLogo} variant="outline" className="neon-glow">
-                    <Download className="w-4 h-4 mr-2" />
-                    Baixar Logo
-                  </Button>
-                  <Button onClick={saveChatSettings} variant="outline" className="neon-glow">
-                    <Save className="w-4 h-4 mr-2" />
-                    Salvar Config
-                  </Button>
-                </div>
-              </div>
-
-              <Card className="glass-effect tech-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MessageCircle className="w-5 h-5" />
-                    Chat com IA
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="chat-enabled"
-                      checked={chatSettings.enabled}
-                      onCheckedChange={(checked) => setChatSettings({ ...chatSettings, enabled: checked })}
-                    />
-                    <Label htmlFor="chat-enabled">Ativar Chat com IA</Label>
-                  </div>
-                  <div>
-                    <Label>Endpoint da IA</Label>
-                    <Input
-                      value={chatSettings.endpoint}
-                      onChange={(e) => setChatSettings({ ...chatSettings, endpoint: e.target.value })}
-                      placeholder="https://api.openai.com/v1/chat/completions"
-                    />
-                    <p className="text-xs text-foreground/60 mt-1">
-                      Configure o endpoint do seu serviço de IA (OpenAI, Claude, etc.)
-                    </p>
-                  </div>
-                  <div>
-                    <Label>Código Embed do Chat</Label>
-                    <Textarea
-                      value={chatSettings.embedCode}
-                      onChange={(e) => setChatSettings({ ...chatSettings, embedCode: e.target.value })}
-                      placeholder="Cole aqui o código embed do seu chat (iframe, script, etc.)"
-                      rows={4}
-                    />
-                    <p className="text-xs text-foreground/60 mt-1">
-                      Código HTML para incorporar um chat externo (Tawk.to, Intercom, etc.)
-                    </p>
-                  </div>
-                  <div>
-                    <Label>Mensagem de Boas-vindas</Label>
-                    <Textarea
-                      value={chatSettings.welcomeMessage}
-                      onChange={(e) => setChatSettings({ ...chatSettings, welcomeMessage: e.target.value })}
-                      rows={2}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="glass-effect tech-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Settings className="w-5 h-5" />
-                    Configurações Gerais
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-foreground/70">
-                    Configurações avançadas e integrações podem ser expandidas conforme necessário.
-                  </p>
-                  <div className="grid gap-4">
-                    <div>
-                      <Label>Chave da API (OpenAI/Claude)</Label>
-                      <Input type="password" placeholder="sk-..." disabled />
-                      <p className="text-xs text-foreground/60 mt-1">
-                        Configure via variáveis de ambiente para segurança
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </TabsContent>
           </Tabs>
         </div>

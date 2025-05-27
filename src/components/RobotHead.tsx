@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import ChatWidget from './ChatWidget';
-import ContactPopup from './ContactPopup';
+import RobotContactBubble from './RobotContactBubble';
 
 interface RobotHeadProps {
   primaryColor?: string;
@@ -11,8 +11,8 @@ interface RobotHeadProps {
 }
 
 const RobotHead: React.FC<RobotHeadProps> = ({ 
-  primaryColor = '#1e40af', 
-  secondaryColor = '#3b82f6',
+  primaryColor = '#6366f1', 
+  secondaryColor = '#8b5cf6',
   onChatClick 
 }) => {
   const robotRef = useRef<HTMLDivElement>(null);
@@ -21,7 +21,6 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const [expression, setExpression] = useState<'neutral' | 'happy' | 'excited' | 'thinking'>('neutral');
   const [isBlinking, setIsBlinking] = useState(false);
   const [showChatWidget, setShowChatWidget] = useState(false);
-  const [showContactPopup, setShowContactPopup] = useState(false);
   const [robotPosition, setRobotPosition] = useState({ x: 0, y: 0 });
   const { theme } = useTheme();
 
@@ -39,19 +38,6 @@ const RobotHead: React.FC<RobotHeadProps> = ({
       setChatSettings(JSON.parse(savedChat));
     }
   }, []);
-
-  // Show contact popup randomly every 10-20 seconds
-  useEffect(() => {
-    const showRandomContact = () => {
-      if (!showChatWidget) {
-        setShowContactPopup(true);
-        setTimeout(() => setShowContactPopup(false), 3000);
-      }
-    };
-
-    const interval = setInterval(showRandomContact, 15000 + Math.random() * 10000);
-    return () => clearInterval(interval);
-  }, [showChatWidget]);
 
   // Calculate eye movement based on mouse position
   const updateEyePosition = useCallback((e: MouseEvent) => {
@@ -126,7 +112,7 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const getRobotColors = () => {
     if (theme === 'dark') {
       return {
-        head: 'from-slate-800 to-blue-900',
+        head: 'from-slate-700 to-slate-800',
         accent: primaryColor,
         secondary: secondaryColor
       };
@@ -167,8 +153,9 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   };
 
   const handleRobotClick = () => {
-    setShowChatWidget(!showChatWidget);
-    setShowContactPopup(false);
+    if (chatSettings.enabled) {
+      setShowChatWidget(!showChatWidget);
+    }
   };
 
   const handleContactClick = (type: string, value: string) => {
@@ -187,7 +174,6 @@ const RobotHead: React.FC<RobotHeadProps> = ({
         window.open(`https://${value}`, '_blank');
         break;
     }
-    setShowContactPopup(false);
   };
 
   return (
@@ -249,28 +235,31 @@ const RobotHead: React.FC<RobotHeadProps> = ({
               </div>
             </div>
             
-            {/* Chat indicator */}
-            <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
+            {/* Chat indicator - only show if chat is enabled */}
+            {chatSettings.enabled && (
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                <div className="w-3 h-3 bg-white rounded-full"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      <ContactPopup
-        isVisible={showContactPopup}
-        position={robotPosition}
+      <RobotContactBubble
         onContactClick={handleContactClick}
+        robotPosition={robotPosition}
       />
 
-      <ChatWidget
-        isOpen={showChatWidget}
-        onClose={() => setShowChatWidget(false)}
-        position={robotPosition}
-        endpoint={chatSettings.endpoint}
-        welcomeMessage={chatSettings.welcomeMessage}
-        embedCode={chatSettings.embedCode}
-      />
+      {chatSettings.enabled && (
+        <ChatWidget
+          isOpen={showChatWidget}
+          onClose={() => setShowChatWidget(false)}
+          position={robotPosition}
+          endpoint={chatSettings.endpoint}
+          welcomeMessage={chatSettings.welcomeMessage}
+          embedCode={chatSettings.embedCode}
+        />
+      )}
     </>
   );
 };
