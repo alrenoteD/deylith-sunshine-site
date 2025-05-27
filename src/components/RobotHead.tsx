@@ -29,7 +29,8 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const [chatSettings, setChatSettings] = useState({
     enabled: true,
     endpoint: '',
-    welcomeMessage: 'Olá! Como posso ajudar você hoje?'
+    welcomeMessage: 'Olá! Como posso ajudar você hoje?',
+    embedCode: ''
   });
 
   useEffect(() => {
@@ -38,6 +39,19 @@ const RobotHead: React.FC<RobotHeadProps> = ({
       setChatSettings(JSON.parse(savedChat));
     }
   }, []);
+
+  // Show contact popup randomly every 10-20 seconds
+  useEffect(() => {
+    const showRandomContact = () => {
+      if (!showChatWidget) {
+        setShowContactPopup(true);
+        setTimeout(() => setShowContactPopup(false), 3000);
+      }
+    };
+
+    const interval = setInterval(showRandomContact, 15000 + Math.random() * 10000);
+    return () => clearInterval(interval);
+  }, [showChatWidget]);
 
   // Calculate eye movement based on mouse position
   const updateEyePosition = useCallback((e: MouseEvent) => {
@@ -78,17 +92,13 @@ const RobotHead: React.FC<RobotHeadProps> = ({
       const elementText = target.textContent?.toLowerCase() || '';
       if (elementText.includes('fale conosco') || elementText.includes('whatsapp')) {
         setExpression('excited');
-        setShowContactPopup(true);
       } else if (elementText.includes('benefícios')) {
         setExpression('happy');
-        setShowContactPopup(false);
       } else {
         setExpression('thinking');
-        setShowContactPopup(false);
       }
     } else {
       setExpression('neutral');
-      setShowContactPopup(false);
     }
   }, []);
 
@@ -157,13 +167,8 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   };
 
   const handleRobotClick = () => {
-    if (chatSettings.enabled && chatSettings.endpoint) {
-      setShowChatWidget(!showChatWidget);
-    } else {
-      // Fallback to WhatsApp
-      const message = "Olá! Gostaria de conversar com um agente sobre IA para minha empresa.";
-      window.open(`https://wa.me/5548992111496?text=${encodeURIComponent(message)}`, '_blank');
-    }
+    setShowChatWidget(!showChatWidget);
+    setShowContactPopup(false);
   };
 
   const handleContactClick = (type: string, value: string) => {
@@ -264,6 +269,7 @@ const RobotHead: React.FC<RobotHeadProps> = ({
         position={robotPosition}
         endpoint={chatSettings.endpoint}
         welcomeMessage={chatSettings.welcomeMessage}
+        embedCode={chatSettings.embedCode}
       />
     </>
   );

@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3, Palette, MessageCircle } from 'lucide-react';
+import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3, Palette, MessageCircle, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FAQ {
@@ -66,6 +66,7 @@ interface ChatSettings {
   enabled: boolean;
   endpoint: string;
   welcomeMessage: string;
+  embedCode: string;
 }
 
 interface FooterContent {
@@ -111,7 +112,8 @@ const Admin = () => {
   const [chatSettings, setChatSettings] = useState<ChatSettings>({
     enabled: true,
     endpoint: '',
-    welcomeMessage: 'Olá! Como posso ajudar você hoje?'
+    welcomeMessage: 'Olá! Como posso ajudar você hoje?',
+    embedCode: ''
   });
   const [footerContent, setFooterContent] = useState<FooterContent>({
     description: 'Especialistas em agentes IA personalizados. Automatizamos processos e escalamos negócios através da inteligência artificial.',
@@ -276,6 +278,74 @@ const Admin = () => {
     toast({ title: "Sucesso", description: "Seções personalizadas salvas!" });
   };
 
+  const downloadLogo = () => {
+    // Create SVG logo
+    const svg = `
+      <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" width="240" height="80">
+        <defs>
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <!-- Sun rays -->
+        <g transform="translate(20,20)" filter="url(#glow)">
+          <path d="M0,-12 L2,-8 L0,-4 L-2,-8 Z" fill="url(#logoGradient)" opacity="0.8">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M8.5,-8.5 L10.5,-6.5 L8.5,-4.5 L6.5,-6.5 Z" fill="url(#logoGradient)" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M12,0 L8,2 L4,0 L8,-2 Z" fill="url(#logoGradient)" opacity="0.8">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M8.5,8.5 L6.5,6.5 L8.5,4.5 L10.5,6.5 Z" fill="url(#logoGradient)" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M0,12 L-2,8 L0,4 L2,8 Z" fill="url(#logoGradient)" opacity="0.8">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-8.5,8.5 L-6.5,6.5 L-8.5,4.5 L-10.5,6.5 Z" fill="url(#logoGradient)" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-12,0 L-8,-2 L-4,0 L-8,2 Z" fill="url(#logoGradient)" opacity="0.8">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-8.5,-8.5 L-10.5,-6.5 L-8.5,-4.5 L-6.5,-6.5 Z" fill="url(#logoGradient)" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" values="0;360" dur="8s" repeatCount="indefinite"/>
+          </path>
+          
+          <!-- Central circle -->
+          <circle cx="0" cy="0" r="4" fill="url(#logoGradient)" opacity="0.9"/>
+        </g>
+        
+        <!-- Company name -->
+        <text x="45" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="url(#logoGradient)">
+          Deylith
+        </text>
+      </svg>
+    `;
+
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'deylith-logo.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    toast({ title: "Sucesso", description: "Logo baixada com sucesso!" });
+  };
+
   // FAQ functions
   const addFAQ = () => {
     const newFAQ: FAQ = {
@@ -336,42 +406,6 @@ const Admin = () => {
 
   const deleteUseCase = (index: number) => {
     setUseCases(useCases.filter((_, i) => i !== index));
-  };
-
-  const handleIconUpload = (contactId: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string;
-        updateContact(contactId, 'icon', imageUrl);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Custom sections functions
-  const addCustomSection = () => {
-    const newSection = {
-      id: Date.now().toString(),
-      title: 'Nova Seção',
-      content: 'Conteúdo da nova seção...',
-      backgroundColor: 'bg-background',
-      textColor: 'text-foreground',
-      showCard: true,
-      enabled: true
-    };
-    setCustomSections([...customSections, newSection]);
-  };
-
-  const updateCustomSection = (id: string, field: string, value: any) => {
-    setCustomSections(customSections.map(section => 
-      section.id === id ? { ...section, [field]: value } : section
-    ));
-  };
-
-  const deleteCustomSection = (id: string) => {
-    setCustomSections(customSections.filter(section => section.id !== id));
   };
 
   if (!mounted) {
@@ -1003,10 +1037,16 @@ const Admin = () => {
             <TabsContent value="settings" className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Configurações</h2>
-                <Button onClick={saveChatSettings} variant="outline" className="neon-glow">
-                  <Save className="w-4 h-4 mr-2" />
-                  Salvar Config
-                </Button>
+                <div className="flex gap-2">
+                  <Button onClick={downloadLogo} variant="outline" className="neon-glow">
+                    <Download className="w-4 h-4 mr-2" />
+                    Baixar Logo
+                  </Button>
+                  <Button onClick={saveChatSettings} variant="outline" className="neon-glow">
+                    <Save className="w-4 h-4 mr-2" />
+                    Salvar Config
+                  </Button>
+                </div>
               </div>
 
               <Card className="glass-effect tech-card">
@@ -1034,6 +1074,18 @@ const Admin = () => {
                     />
                     <p className="text-xs text-foreground/60 mt-1">
                       Configure o endpoint do seu serviço de IA (OpenAI, Claude, etc.)
+                    </p>
+                  </div>
+                  <div>
+                    <Label>Código Embed do Chat</Label>
+                    <Textarea
+                      value={chatSettings.embedCode}
+                      onChange={(e) => setChatSettings({ ...chatSettings, embedCode: e.target.value })}
+                      placeholder="Cole aqui o código embed do seu chat (iframe, script, etc.)"
+                      rows={4}
+                    />
+                    <p className="text-xs text-foreground/60 mt-1">
+                      Código HTML para incorporar um chat externo (Tawk.to, Intercom, etc.)
                     </p>
                   </div>
                   <div>

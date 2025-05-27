@@ -18,6 +18,7 @@ interface ChatWidgetProps {
   position: { x: number; y: number };
   endpoint?: string;
   welcomeMessage?: string;
+  embedCode?: string;
 }
 
 const ChatWidget: React.FC<ChatWidgetProps> = ({
@@ -25,7 +26,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   onClose,
   position,
   endpoint,
-  welcomeMessage = "Olá! Como posso ajudar você hoje?"
+  welcomeMessage = "Olá! Como posso ajudar você hoje?",
+  embedCode
 }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -38,6 +40,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const embedRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,6 +49,25 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Load embed code when widget opens
+  useEffect(() => {
+    if (isOpen && embedCode && embedRef.current) {
+      embedRef.current.innerHTML = embedCode;
+      
+      // Execute any scripts in the embed code
+      const scripts = embedRef.current.querySelectorAll('script');
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        if (script.src) {
+          newScript.src = script.src;
+        } else {
+          newScript.textContent = script.textContent;
+        }
+        document.head.appendChild(newScript);
+      });
+    }
+  }, [isOpen, embedCode]);
 
   const sendMessage = async () => {
     if (!inputValue.trim()) return;
@@ -119,50 +141,58 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[80%] p-3 rounded-lg ${
-                  message.isUser
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-foreground'
-                }`}
-              >
-                <p className="text-sm">{message.text}</p>
-                <span className="text-xs opacity-70">
-                  {message.timestamp.toLocaleTimeString()}
-                </span>
-              </div>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-muted p-3 rounded-lg">
-                <Loader2 className="w-4 h-4 animate-spin" />
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-
-        <div className="p-4 border-t border-primary/20">
-          <div className="flex gap-2">
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Digite sua mensagem..."
-              disabled={isLoading}
-            />
-            <Button onClick={sendMessage} disabled={isLoading || !inputValue.trim()}>
-              <Send className="w-4 h-4" />
-            </Button>
+        {embedCode ? (
+          <div className="flex-1 p-4">
+            <div ref={embedRef} className="w-full h-full" />
           </div>
-        </div>
+        ) : (
+          <>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[80%] p-3 rounded-lg ${
+                      message.isUser
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted text-foreground'
+                    }`}
+                  >
+                    <p className="text-sm">{message.text}</p>
+                    <span className="text-xs opacity-70">
+                      {message.timestamp.toLocaleTimeString()}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-muted p-3 rounded-lg">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <div className="p-4 border-t border-primary/20">
+              <div className="flex gap-2">
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Digite sua mensagem..."
+                  disabled={isLoading}
+                />
+                <Button onClick={sendMessage} disabled={isLoading || !inputValue.trim()}>
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </Card>
   );

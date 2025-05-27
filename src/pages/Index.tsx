@@ -51,11 +51,20 @@ const Index = () => {
         <Header />
         <main>
           <Hero />
-          <About />
+          
+          {/* About section with different background */}
+          <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
+            <About />
+          </section>
+          
           <Services />
           <Benefits />
           <Charts />
-          <UseCases />
+          
+          {/* Use Cases section with different background */}
+          <section className="py-16 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20">
+            <UseCases />
+          </section>
           
           {/* Custom Sections */}
           {customSections
@@ -73,7 +82,12 @@ const Index = () => {
           
           <FAQ />
         </main>
-        <Footer />
+        
+        {/* Footer with different background */}
+        <div className="bg-gradient-to-br from-slate-900 to-blue-900">
+          <Footer />
+        </div>
+        
         <RobotHead 
           primaryColor={themeSettings.robotPrimaryColor}
           secondaryColor={themeSettings.robotSecondaryColor}
