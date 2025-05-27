@@ -10,6 +10,7 @@ import Charts from '../components/Charts';
 import UseCases from '../components/UseCases';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
+import RobotHead from '../components/RobotHead';
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -36,6 +37,7 @@ const Index = () => {
           <FAQ />
         </main>
         <Footer />
+        <RobotHead />
       </div>
     </ThemeProvider>
   );

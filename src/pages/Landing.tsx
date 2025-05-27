@@ -7,6 +7,7 @@ import Benefits from '../components/Benefits';
 import Charts from '../components/Charts';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
+import RobotHead from '../components/RobotHead';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageCircle, Target, Settings, Brain } from 'lucide-react';
 
@@ -96,6 +97,7 @@ const Landing = () => {
           <FAQ />
         </main>
         <Footer />
+        <RobotHead />
       </div>
     </ThemeProvider>
   );

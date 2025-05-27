@@ -46,41 +46,41 @@
   }
 
   .dark {
-    --background: 8 8 23;
+    --background: 6 7 20;
     --foreground: 248 250 252;
 
-    --card: 15 15 35;
+    --card: 15 16 26;
     --card-foreground: 248 250 252;
 
-    --popover: 15 15 35;
+    --popover: 15 16 26;
     --popover-foreground: 248 250 252;
 
     --primary: 56 189 248;
-    --primary-foreground: 8 8 23;
+    --primary-foreground: 6 7 20;
 
-    --secondary: 30 30 60;
+    --secondary: 30 32 48;
     --secondary-foreground: 248 250 252;
 
-    --muted: 30 30 60;
+    --muted: 30 32 48;
     --muted-foreground: 148 163 184;
 
-    --accent: 30 30 60;
+    --accent: 30 32 48;
     --accent-foreground: 248 250 252;
 
     --destructive: 239 68 68;
     --destructive-foreground: 248 250 252;
 
-    --border: 45 45 80;
-    --input: 45 45 80;
+    --border: 45 48 70;
+    --input: 45 48 70;
     --ring: 56 189 248;
 
-    --sidebar-background: 8 8 23;
+    --sidebar-background: 6 7 20;
     --sidebar-foreground: 248 250 252;
     --sidebar-primary: 56 189 248;
-    --sidebar-primary-foreground: 8 8 23;
-    --sidebar-accent: 30 30 60;
+    --sidebar-primary-foreground: 6 7 20;
+    --sidebar-accent: 30 32 48;
     --sidebar-accent-foreground: 248 250 252;
-    --sidebar-border: 45 45 80;
+    --sidebar-border: 45 48 70;
     --sidebar-ring: 56 189 248;
   }
 }
@@ -102,7 +102,7 @@
   }
   
   .hero-gradient {
-    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20;
+    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-slate-900 dark:via-purple-900/20 dark:to-indigo-900/20;
   }
   
   .daylight-gradient {
@@ -110,7 +110,7 @@
   }
 
   .glass-effect {
-    @apply backdrop-blur-xl bg-white/80 dark:bg-black/40 border border-white/30 dark:border-white/10 shadow-lg;
+    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-800/40 border border-white/30 dark:border-slate-700/50 shadow-lg;
   }
 
   .neon-glow {
@@ -120,6 +120,14 @@
   .tech-card {
     @apply relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-1000;
   }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-gpu {
+    transform-style: preserve-3d;
+  }
 }
 
 /* Scrollbar customization */
@@ -128,15 +136,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-900;
+  @apply bg-gray-100 dark:bg-slate-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+  @apply bg-gray-300 dark:bg-slate-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-600;
+  @apply bg-gray-400 dark:bg-slate-600;
 }
 
 /* Tech animations */
@@ -158,6 +166,16 @@
   100% { transform: translateY(100vh); opacity: 0; }
 }
 
+@keyframes data-flow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes circuit-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
 .float-animation {
   animation: float 6s ease-in-out infinite;
 }
@@ -168,4 +186,27 @@
 
 .matrix-rain {
   animation: matrix-rain 3s linear infinite;
+}
+
+.data-flow {
+  animation: data-flow 2s linear infinite;
+}
+
+.circuit-pulse {
+  animation: circuit-pulse 2s ease-in-out infinite;
+}
+
+/* Futuristic tech patterns */
+.tech-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+  background-size: 100px 100px;
+}
+
+.circuit-board {
+  background-image: 
+    linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

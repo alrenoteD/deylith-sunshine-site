@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
+import Logo from './Logo';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,10 +37,8 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg daylight-gradient flex items-center justify-center">
-              <span className="text-white font-bold text-lg">D</span>
-            </div>
+          <div className="flex items-center space-x-3">
+            <Logo size="md" />
             <span className="text-xl font-bold gradient-text">Deylith.dev</span>
           </div>
 
@@ -83,8 +82,8 @@ const Header = () => {
             </Button>
             
             <Button
-              onClick={() => window.open('https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa.', '_blank')}
-              className="hidden md:inline-flex daylight-gradient text-white hover:opacity-90 transition-opacity animate-pulse-glow"
+              onClick={() => window.open('https://wa.me/5548992111496?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa.', '_blank')}
+              className="hidden md:inline-flex bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90 transition-opacity shadow-lg border-0"
             >
               Fale Conosco
             </Button>
@@ -130,8 +129,8 @@ const Header = () => {
                 FAQ
               </button>
               <Button
-                onClick={() => window.open('https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa.', '_blank')}
-                className="daylight-gradient text-white hover:opacity-90 transition-opacity"
+                onClick={() => window.open('https://wa.me/5548992111496?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa.', '_blank')}
+                className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90 transition-opacity"
               >
                 Fale Conosco
               </Button>

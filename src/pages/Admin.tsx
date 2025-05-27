@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Trash2, Settings, Save, Eye } from 'lucide-react';
+import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FAQ {
@@ -38,11 +38,24 @@ interface Content {
   };
 }
 
+interface Stats {
+  companies: string;
+  savings: string;
+  roi: string;
+  availability: string;
+}
+
 const Admin = () => {
   const [mounted, setMounted] = useState(false);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [content, setContent] = useState<Content | null>(null);
+  const [stats, setStats] = useState<Stats>({
+    companies: '200+',
+    savings: '80%',
+    roi: '300%',
+    availability: '24/7'
+  });
   const [activeTab, setActiveTab] = useState('faqs');
   const { toast } = useToast();
 
@@ -62,10 +75,17 @@ const Admin = () => {
       
       // Simular dados de contato
       setContacts([
-        { id: '1', type: 'whatsapp', value: '5511999999999', icon: '📱', label: 'WhatsApp' },
-        { id: '2', type: 'email', value: 'contato@deylith.dev', icon: '📧', label: 'Email' },
-        { id: '3', type: 'website', value: 'www.deylith.dev', icon: '🌐', label: 'Website' },
+        { id: '1', type: 'whatsapp', value: '5548992111496', icon: '📱', label: 'WhatsApp' },
+        { id: '2', type: 'email', value: 'maycondouglas@deylith.dev', icon: '📧', label: 'Email' },
+        { id: '3', type: 'website', value: 'deylith.dev', icon: '🌐', label: 'Website' },
+        { id: '4', type: 'location', value: 'Içara, SC - Atendimento Mundial', icon: '📍', label: 'Localização' },
       ]);
+
+      // Carregar stats salvos
+      const savedStats = localStorage.getItem('stats');
+      if (savedStats) {
+        setStats(JSON.parse(savedStats));
+      }
     } catch (error) {
       toast({
         title: "Erro",
@@ -76,7 +96,6 @@ const Admin = () => {
   };
 
   const saveFAQs = () => {
-    // Em produção, enviaria para uma API
     localStorage.setItem('faqs', JSON.stringify(faqs));
     toast({
       title: "Sucesso",
@@ -85,7 +104,6 @@ const Admin = () => {
   };
 
   const saveContent = () => {
-    // Em produção, enviaria para uma API
     localStorage.setItem('content', JSON.stringify(content));
     toast({
       title: "Sucesso",
@@ -94,11 +112,18 @@ const Admin = () => {
   };
 
   const saveContacts = () => {
-    // Em produção, enviaria para uma API
     localStorage.setItem('contacts', JSON.stringify(contacts));
     toast({
       title: "Sucesso",
       description: "Contatos salvos com sucesso!"
+    });
+  };
+
+  const saveStats = () => {
+    localStorage.setItem('stats', JSON.stringify(stats));
+    toast({
+      title: "Sucesso",
+      description: "Estatísticas salvas com sucesso!"
     });
   };
 
@@ -142,6 +167,19 @@ const Admin = () => {
     setContacts(contacts.filter(contact => contact.id !== id));
   };
 
+  const handleIconUpload = (contactId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Em produção, você faria upload para um servidor
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target?.result as string;
+        updateContact(contactId, 'icon', imageUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   if (!mounted) {
     return null;
   }
@@ -170,10 +208,11 @@ const Admin = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-4 glass-effect">
+            <TabsList className="grid w-full grid-cols-5 glass-effect">
               <TabsTrigger value="faqs">FAQs</TabsTrigger>
               <TabsTrigger value="content">Conteúdo</TabsTrigger>
               <TabsTrigger value="contacts">Contatos</TabsTrigger>
+              <TabsTrigger value="stats">Estatísticas</TabsTrigger>
               <TabsTrigger value="settings">Configurações</TabsTrigger>
             </TabsList>
 
@@ -355,7 +394,7 @@ const Admin = () => {
                 {contacts.map((contact) => (
                   <Card key={contact.id} className="glass-effect tech-card">
                     <CardContent className="p-6">
-                      <div className="grid gap-4 md:grid-cols-5">
+                      <div className="grid gap-4 md:grid-cols-6">
                         <div>
                           <Label>Tipo</Label>
                           <Input
@@ -374,11 +413,28 @@ const Admin = () => {
                         </div>
                         <div>
                           <Label>Ícone</Label>
-                          <Input
-                            value={contact.icon}
-                            onChange={(e) => updateContact(contact.id, 'icon', e.target.value)}
-                            placeholder="📱, 📧..."
-                          />
+                          <div className="flex gap-2">
+                            <Input
+                              value={contact.icon}
+                              onChange={(e) => updateContact(contact.id, 'icon', e.target.value)}
+                              placeholder="📱, 📧..."
+                              className="flex-1"
+                            />
+                            <Button
+                              size="sm"
+                              onClick={() => document.getElementById(`icon-upload-${contact.id}`)?.click()}
+                              className="daylight-gradient"
+                            >
+                              <Upload className="w-4 h-4" />
+                            </Button>
+                            <input
+                              id={`icon-upload-${contact.id}`}
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => handleIconUpload(contact.id, e)}
+                            />
+                          </div>
                         </div>
                         <div>
                           <Label>Label</Label>
@@ -387,6 +443,13 @@ const Admin = () => {
                             onChange={(e) => updateContact(contact.id, 'label', e.target.value)}
                             placeholder="WhatsApp, Email..."
                           />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          {contact.icon.startsWith('data:') ? (
+                            <img src={contact.icon} alt="Icon" className="w-8 h-8 rounded" />
+                          ) : (
+                            <span className="text-2xl">{contact.icon}</span>
+                          )}
                         </div>
                         <div className="flex items-end">
                           <Button
@@ -402,6 +465,60 @@ const Admin = () => {
                   </Card>
                 ))}
               </div>
+            </TabsContent>
+
+            {/* Stats Tab */}
+            <TabsContent value="stats" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Gerenciar Estatísticas</h2>
+                <Button onClick={saveStats} variant="outline" className="neon-glow">
+                  <Save className="w-4 h-4 mr-2" />
+                  Salvar
+                </Button>
+              </div>
+
+              <Card className="glass-effect tech-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5" />
+                    Estatísticas do Hero
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <Label>Empresas Atendidas</Label>
+                    <Input
+                      value={stats.companies}
+                      onChange={(e) => setStats({ ...stats, companies: e.target.value })}
+                      placeholder="200+"
+                    />
+                  </div>
+                  <div>
+                    <Label>Economia Média</Label>
+                    <Input
+                      value={stats.savings}
+                      onChange={(e) => setStats({ ...stats, savings: e.target.value })}
+                      placeholder="80%"
+                    />
+                  </div>
+                  <div>
+                    <Label>Disponibilidade</Label>
+                    <Input
+                      value={stats.availability}
+                      onChange={(e) => setStats({ ...stats, availability: e.target.value })}
+                      placeholder="24/7"
+                    />
+                  </div>
+                  <div>
+                    <Label>ROI Médio</Label>
+                    <Input
+                      value={stats.roi}
+                      onChange={(e) => setStats({ ...stats, roi: e.target.value })}
+                      placeholder="300%"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Settings Tab */}

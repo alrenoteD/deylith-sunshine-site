@@ -1,5 +1,6 @@
 
 import { Button } from '@/components/ui/button';
+import Logo from './Logo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,18 +11,16 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 rounded-lg daylight-gradient flex items-center justify-center">
-                <span className="text-white font-bold text-lg">D</span>
-              </div>
+            <div className="flex items-center space-x-3 mb-4">
+              <Logo size="md" />
               <span className="text-xl font-bold gradient-text">Deylith.dev</span>
             </div>
             <p className="text-foreground/70 mb-6 leading-relaxed">
               Especialistas em agentes IA personalizados. Automatizamos processos e escalamos negócios através da inteligência artificial.
             </p>
             <Button
-              onClick={() => window.open('https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre agentes IA.', '_blank')}
-              className="daylight-gradient text-white hover:opacity-90 transition-opacity"
+              onClick={() => window.open('https://wa.me/5548992111496?text=Olá! Gostaria de saber mais sobre agentes IA.', '_blank')}
+              className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90 transition-opacity"
             >
               📱 Entre em Contato
             </Button>
@@ -42,10 +41,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-foreground">Contato</h3>
             <ul className="space-y-2 text-foreground/70">
-              <li>📧 contato@deylith.dev</li>
-              <li>📱 WhatsApp</li>
-              <li>🌐 www.deylith.dev</li>
-              <li>📍 Brasil</li>
+              <li>📧 maycondouglas@deylith.dev</li>
+              <li>📱 (48) 99211-1496</li>
+              <li>🌐 deylith.dev</li>
+              <li>📍 Içara, SC - Atendimento Mundial</li>
             </ul>
           </div>
         </div>

@@ -14,12 +14,23 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  Radar
+  Radar,
+  AreaChart,
+  Area
 } from 'recharts';
 import statsData from '../data/stats.json';
 
 const Charts = () => {
   const { costComparison, roi, capabilities } = statsData;
+
+  // Custom tooltip formatter
+  const formatTooltip = (value: any, name: string, props: any) => {
+    if (name === 'investment') return [`R$ ${Math.abs(value).toLocaleString()}`, 'Investimento'];
+    if (name === 'savings') return [`R$ ${value.toLocaleString()}`, 'Economia Mensal'];
+    if (name === 'net') return [`R$ ${value.toLocaleString()}`, 'Lucro Líquido Acumulado'];
+    if (name === 'total') return [`R$ ${value.toLocaleString()}`, 'Custo Total'];
+    return [`${value}`, name];
+  };
 
   return (
     <section className="py-20 hero-gradient relative overflow-hidden">
@@ -67,12 +78,9 @@ const Charts = () => {
                   />
                   <YAxis tick={{ fill: 'currentColor' }} />
                   <Tooltip 
-                    formatter={(value, name) => [
-                      `R$ ${value.toLocaleString()}`,
-                      'Custo Total'
-                    ]}
+                    formatter={formatTooltip}
                     contentStyle={{
-                      backgroundColor: 'rgba(15, 15, 35, 0.95)',
+                      backgroundColor: 'rgba(15, 16, 26, 0.95)',
                       border: '1px solid rgba(139, 92, 246, 0.3)',
                       borderRadius: '8px',
                       color: '#fff'
@@ -134,8 +142,9 @@ const Charts = () => {
                     strokeWidth={3}
                   />
                   <Tooltip 
+                    formatter={formatTooltip}
                     contentStyle={{
-                      backgroundColor: 'rgba(15, 15, 35, 0.95)',
+                      backgroundColor: 'rgba(15, 16, 26, 0.95)',
                       border: '1px solid rgba(139, 92, 246, 0.3)',
                       borderRadius: '8px',
                       color: '#fff'
@@ -148,7 +157,7 @@ const Charts = () => {
         </div>
 
         {/* ROI Timeline */}
-        <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow">
+        <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow mb-8">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-center gradient-text">
               Projeção de ROI - 6 Meses
@@ -170,13 +179,9 @@ const Charts = () => {
                   tickFormatter={(value) => `R$ ${(value/1000).toFixed(0)}k`}
                 />
                 <Tooltip 
-                  formatter={(value, name) => [
-                    `R$ ${value.toLocaleString()}`,
-                    name === 'net' ? 'Lucro Líquido Acumulado' : 
-                    name === 'investment' ? 'Investimento' : 'Economia Mensal'
-                  ]}
+                  formatter={formatTooltip}
                   contentStyle={{
-                    backgroundColor: 'rgba(15, 15, 35, 0.95)',
+                    backgroundColor: 'rgba(15, 16, 26, 0.95)',
                     border: '1px solid rgba(139, 92, 246, 0.3)',
                     borderRadius: '8px',
                     color: '#fff'
@@ -187,7 +192,7 @@ const Charts = () => {
                   dataKey="investment" 
                   stroke="#dc2626" 
                   strokeWidth={3}
-                  name="Investimento"
+                  name="investment"
                   strokeDasharray="5 5"
                 />
                 <Line 
@@ -195,14 +200,14 @@ const Charts = () => {
                   dataKey="savings" 
                   stroke="#10B981" 
                   strokeWidth={3}
-                  name="Economia"
+                  name="savings"
                 />
                 <Line 
                   type="monotone" 
                   dataKey="net" 
                   stroke="#8B5CF6" 
                   strokeWidth={4}
-                  name="Lucro Líquido"
+                  name="net"
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -220,6 +225,52 @@ const Charts = () => {
                 <p className="text-sm text-foreground/70">A partir do 3º mês</p>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Additional Economic Impact Chart */}
+        <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-center gradient-text">
+              Impacto Econômico Acumulado
+            </CardTitle>
+            <p className="text-sm text-center text-foreground/60">
+              Economia acumulada ao longo do tempo
+            </p>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={roi}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 92, 246, 0.2)" />
+                <XAxis dataKey="month" tick={{ fill: 'currentColor' }} />
+                <YAxis 
+                  tick={{ fill: 'currentColor' }}
+                  tickFormatter={(value) => `R$ ${(value/1000).toFixed(0)}k`}
+                />
+                <Tooltip 
+                  formatter={formatTooltip}
+                  contentStyle={{
+                    backgroundColor: 'rgba(15, 16, 26, 0.95)',
+                    border: '1px solid rgba(139, 92, 246, 0.3)',
+                    borderRadius: '8px',
+                    color: '#fff'
+                  }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="net" 
+                  stroke="#8B5CF6" 
+                  fill="url(#areaGradient)"
+                  strokeWidth={2}
+                />
+                <defs>
+                  <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
+              </AreaChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>

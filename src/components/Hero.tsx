@@ -58,12 +58,11 @@ const Hero = () => {
             <Button
               size="lg"
               onClick={() => window.open(hero.ctaWhatsapp, '_blank')}
-              className="tech-gradient text-white hover:opacity-90 transition-all duration-300 transform hover:scale-105 pulse-neon text-lg px-8 py-6 relative overflow-hidden group"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6 shadow-lg border-0 font-semibold"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 📱 {hero.ctaText}
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-tech-purple via-tech-pink to-tech-orange opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </Button>
             
             <Button
