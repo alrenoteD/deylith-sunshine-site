@@ -1,33 +1,13 @@
-# Stage 1: Build
-FROM node:18-alpine AS build
-
+# Etapa 1: build
+FROM node:18 AS builder
 WORKDIR /app
-
-# Copia package.json e package-lock.json para instalar dependências
-COPY package*.json ./
-
-RUN npm install
-
-# Copia todo o código
 COPY . .
+RUN npm install && npm run build
 
-# Roda o build do Vite (gera a pasta dist)
-RUN npm run build
+# Etapa 2: nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Stage 2: Serve arquivos estáticos com nginx
-FROM nginx:stable-alpine
-
-# Remove o conteúdo default do nginx
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copia os arquivos estáticos da build para a pasta onde nginx serve
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copia o arquivo de configuração nginx customizado (opcional)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expõe a porta 80
 EXPOSE 80
-
-# Starta o nginx
 CMD ["nginx", "-g", "daemon off;"]
