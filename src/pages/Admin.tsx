@@ -408,6 +408,43 @@ const Admin = () => {
     setUseCases(useCases.filter((_, i) => i !== index));
   };
 
+  // Icon upload handler
+  const handleIconUpload = (contactId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        updateContact(contactId, 'icon', result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Custom section functions
+  const addCustomSection = () => {
+    const newSection: CustomSection = {
+      id: Date.now().toString(),
+      title: '',
+      content: '',
+      backgroundColor: 'bg-background',
+      textColor: 'text-foreground',
+      showCard: true,
+      enabled: true
+    };
+    setCustomSections([...customSections, newSection]);
+  };
+
+  const updateCustomSection = (id: string, field: keyof CustomSection, value: string | boolean) => {
+    setCustomSections(customSections.map(section => 
+      section.id === id ? { ...section, [field]: value } : section
+    ));
+  };
+
+  const deleteCustomSection = (id: string) => {
+    setCustomSections(customSections.filter(section => section.id !== id));
+  };
+
   if (!mounted) {
     return null;
   }
