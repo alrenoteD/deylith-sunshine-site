@@ -14,9 +14,7 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  Radar,
-  AreaChart,
-  Area
+  Radar
 } from 'recharts';
 import statsData from '../data/stats.json';
 
@@ -156,7 +154,7 @@ const Charts = () => {
           </Card>
         </div>
 
-        {/* ROI Timeline */}
+        {/* ROI Timeline with detailed explanation */}
         <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow mb-8">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-center gradient-text">
@@ -211,66 +209,58 @@ const Charts = () => {
                 />
               </LineChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-3 gap-4 mt-6">
-              <div className="text-center p-3 bg-red-500/10 rounded-lg">
-                <p className="text-red-400 font-bold">Investimento</p>
-                <p className="text-sm text-foreground/70">Desenvolvimento + Manutenção</p>
+            
+            {/* Detailed explanation */}
+            <div className="mt-6 space-y-4">
+              <h4 className="text-lg font-semibold gradient-text text-center mb-4">
+                Como Calculamos o ROI
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-4 h-0.5 bg-red-500 mr-2"></div>
+                    <p className="text-red-400 font-bold">Linha Vermelha - Investimento</p>
+                  </div>
+                  <p className="text-sm text-foreground/70">
+                    <strong>Mês 1:</strong> R$ 5.000 (desenvolvimento inicial)<br/>
+                    <strong>Mês 2-6:</strong> R$ 1.000/mês (manutenção)<br/>
+                    <em>Total investido em 6 meses: R$ 10.000</em>
+                  </p>
+                </div>
+                
+                <div className="text-center p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-4 h-0.5 bg-green-500 mr-2"></div>
+                    <p className="text-green-400 font-bold">Linha Verde - Economia</p>
+                  </div>
+                  <p className="text-sm text-foreground/70">
+                    Economia progressiva comparado aos custos de funcionários CLT:<br/>
+                    <strong>R$ 11.200/mês</strong> quando totalmente implementado<br/>
+                    <em>Baseado na diferença de custos do gráfico anterior</em>
+                  </p>
+                </div>
+                
+                <div className="text-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="w-4 h-0.5 bg-purple-500 mr-2"></div>
+                    <p className="text-purple-400 font-bold">Linha Roxa - Lucro Líquido</p>
+                  </div>
+                  <p className="text-sm text-foreground/70">
+                    <strong>ROI Positivo a partir do 3º mês</strong><br/>
+                    Lucro acumulado em 6 meses: <strong>R$ 32.000</strong><br/>
+                    <em>Economia - Investimento = Lucro Real</em>
+                  </p>
+                </div>
               </div>
-              <div className="text-center p-3 bg-green-500/10 rounded-lg">
-                <p className="text-green-400 font-bold">Economia Mensal</p>
-                <p className="text-sm text-foreground/70">Substituição de custos</p>
-              </div>
-              <div className="text-center p-3 bg-purple-500/10 rounded-lg">
-                <p className="text-purple-400 font-bold">ROI Positivo</p>
-                <p className="text-sm text-foreground/70">A partir do 3º mês</p>
+              
+              <div className="mt-4 p-4 bg-primary/10 rounded-lg border border-primary/20">
+                <p className="text-center text-sm text-foreground/80">
+                  💡 <strong>Conclusão:</strong> Em 6 meses, para cada R$ 1 investido, você obtém R$ 4,20 de retorno. 
+                  Isso representa um <strong>ROI de 320%</strong> no período.
+                </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Additional Economic Impact Chart */}
-        <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold text-center gradient-text">
-              Impacto Econômico Acumulado
-            </CardTitle>
-            <p className="text-sm text-center text-foreground/60">
-              Economia acumulada ao longo do tempo
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={roi}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 92, 246, 0.2)" />
-                <XAxis dataKey="month" tick={{ fill: 'currentColor' }} />
-                <YAxis 
-                  tick={{ fill: 'currentColor' }}
-                  tickFormatter={(value) => `R$ ${(value/1000).toFixed(0)}k`}
-                />
-                <Tooltip 
-                  formatter={formatTooltip}
-                  contentStyle={{
-                    backgroundColor: 'rgba(15, 16, 26, 0.95)',
-                    border: '1px solid rgba(139, 92, 246, 0.3)',
-                    borderRadius: '8px',
-                    color: '#fff'
-                  }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="net" 
-                  stroke="#8B5CF6" 
-                  fill="url(#areaGradient)"
-                  strokeWidth={2}
-                />
-                <defs>
-                  <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0.1}/>
-                  </linearGradient>
-                </defs>
-              </AreaChart>
-            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>

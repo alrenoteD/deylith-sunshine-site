@@ -35,6 +35,12 @@
 
     --radius: 0.5rem;
 
+    /* Tech theme variables */
+    --tech-purple: 139 92 246;
+    --tech-pink: 236 72 153;
+    --tech-orange: 249 115 22;
+    --tech-blue: 56 189 248;
+
     --sidebar-background: 255 255 255;
     --sidebar-foreground: 15 23 42;
     --sidebar-primary: 14 165 233;
@@ -46,7 +52,7 @@
   }
 
   .dark {
-    --background: 6 7 20;
+    --background: 2 6 23;
     --foreground: 248 250 252;
 
     --card: 15 16 26;
@@ -56,7 +62,7 @@
     --popover-foreground: 248 250 252;
 
     --primary: 56 189 248;
-    --primary-foreground: 6 7 20;
+    --primary-foreground: 2 6 23;
 
     --secondary: 30 32 48;
     --secondary-foreground: 248 250 252;
@@ -74,10 +80,16 @@
     --input: 45 48 70;
     --ring: 56 189 248;
 
-    --sidebar-background: 6 7 20;
+    /* Dark tech theme */
+    --tech-purple: 139 92 246;
+    --tech-pink: 236 72 153;
+    --tech-orange: 249 115 22;
+    --tech-blue: 56 189 248;
+
+    --sidebar-background: 2 6 23;
     --sidebar-foreground: 248 250 252;
     --sidebar-primary: 56 189 248;
-    --sidebar-primary-foreground: 6 7 20;
+    --sidebar-primary-foreground: 2 6 23;
     --sidebar-accent: 30 32 48;
     --sidebar-accent-foreground: 248 250 252;
     --sidebar-border: 45 48 70;
@@ -102,11 +114,11 @@
   }
   
   .hero-gradient {
-    @apply bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-slate-900 dark:via-purple-900/20 dark:to-indigo-900/20;
+    @apply bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-indigo-900/20;
   }
   
   .daylight-gradient {
-    @apply bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 dark:from-purple-600 dark:via-pink-600 dark:to-orange-600;
+    @apply bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 dark:from-yellow-500 dark:via-orange-600 dark:to-pink-600;
   }
 
   .glass-effect {
@@ -128,6 +140,14 @@
   .transform-gpu {
     transform-style: preserve-3d;
   }
+
+  /* Tech patterns */
+  .bg-neon-grid {
+    background-image: 
+      linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
 }
 
 /* Scrollbar customization */
@@ -147,7 +167,7 @@
   @apply bg-gray-400 dark:bg-slate-600;
 }
 
-/* Tech animations */
+/* Enhanced tech animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33% { transform: translateY(-10px) rotate(1deg); }
@@ -159,54 +179,40 @@
   50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(168, 85, 247, 0.4); }
 }
 
-@keyframes matrix-rain {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+@keyframes slide-in-left {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 
-@keyframes data-flow {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes circuit-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
-.float-animation {
+.animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
-.pulse-neon {
+.animate-pulse-neon {
   animation: pulse-neon 2s ease-in-out infinite;
 }
 
-.matrix-rain {
-  animation: matrix-rain 3s linear infinite;
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out forwards;
 }
 
-.data-flow {
-  animation: data-flow 2s linear infinite;
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
 }
 
-.circuit-pulse {
-  animation: circuit-pulse 2s ease-in-out infinite;
+/* Button improvements for better visibility */
+.daylight-gradient {
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Futuristic tech patterns */
-.tech-pattern {
-  background-image: 
-    radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-  background-size: 100px 100px;
-}
-
-.circuit-board {
-  background-image: 
-    linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-    linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
+.daylight-gradient:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }

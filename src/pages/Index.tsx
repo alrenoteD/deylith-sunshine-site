@@ -19,6 +19,12 @@ const Index = () => {
     setMounted(true);
   }, []);
 
+  const handleChatClick = () => {
+    // Simple chat implementation - opens WhatsApp for now
+    const message = "Olá! Gostaria de conversar com um agente sobre IA para minha empresa.";
+    window.open(`https://wa.me/5548992111496?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   if (!mounted) {
     return null;
   }
@@ -37,7 +43,7 @@ const Index = () => {
           <FAQ />
         </main>
         <Footer />
-        <RobotHead />
+        <RobotHead onChatClick={handleChatClick} />
       </div>
     </ThemeProvider>
   );

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Plus, Trash2, Settings, Save, Eye, Upload, BarChart3, Palette, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FAQ {
@@ -22,6 +22,12 @@ interface Contact {
   value: string;
   icon: string;
   label: string;
+}
+
+interface UseCase {
+  title: string;
+  description: string;
+  results: string;
 }
 
 interface Content {
@@ -45,16 +51,62 @@ interface Stats {
   availability: string;
 }
 
+interface ThemeSettings {
+  primaryColor: string;
+  secondaryColor: string;
+  gradientStart: string;
+  gradientEnd: string;
+  neonEnabled: boolean;
+  robotPrimaryColor: string;
+  robotSecondaryColor: string;
+}
+
+interface ChatSettings {
+  enabled: boolean;
+  endpoint: string;
+  welcomeMessage: string;
+}
+
+interface FooterContent {
+  description: string;
+  servicesTitle: string;
+  services: string[];
+  contactTitle: string;
+  copyright: string;
+}
+
 const Admin = () => {
   const [mounted, setMounted] = useState(false);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [content, setContent] = useState<Content | null>(null);
+  const [useCases, setUseCases] = useState<UseCase[]>([]);
   const [stats, setStats] = useState<Stats>({
     companies: '200+',
     savings: '80%',
     roi: '300%',
     availability: '24/7'
+  });
+  const [themeSettings, setThemeSettings] = useState<ThemeSettings>({
+    primaryColor: '#8B5CF6',
+    secondaryColor: '#EC4899',
+    gradientStart: '#8B5CF6',
+    gradientEnd: '#EC4899',
+    neonEnabled: true,
+    robotPrimaryColor: '#8B5CF6',
+    robotSecondaryColor: '#EC4899'
+  });
+  const [chatSettings, setChatSettings] = useState<ChatSettings>({
+    enabled: true,
+    endpoint: '',
+    welcomeMessage: 'Olá! Como posso ajudar você hoje?'
+  });
+  const [footerContent, setFooterContent] = useState<FooterContent>({
+    description: 'Especialistas em agentes IA personalizados. Automatizamos processos e escalamos negócios através da inteligência artificial.',
+    servicesTitle: 'Serviços',
+    services: ['Atendimento Automatizado', 'SDR Virtual', 'Automação de Processos', 'Assistente Inteligente'],
+    contactTitle: 'Contato',
+    copyright: 'Todos os direitos reservados.'
   });
   const [activeTab, setActiveTab] = useState('faqs');
   const { toast } = useToast();
@@ -66,14 +118,48 @@ const Admin = () => {
 
   const loadData = async () => {
     try {
-      // Simular carregamento dos dados (em produção, viria de uma API)
+      // Load existing data
       const faqsData = await import('../data/faqs.json');
       const contentData = await import('../data/content.json');
       
       setFaqs(faqsData.default);
       setContent(contentData.default);
       
-      // Simular dados de contato
+      // Load use cases
+      setUseCases([
+        {
+          title: "E-commerce",
+          description: "Atendimento 24/7, recuperação de carrinho abandonado, suporte pós-venda automatizado.",
+          results: "87% menos tempo de resposta"
+        },
+        {
+          title: "Clínicas e Consultórios",
+          description: "Agendamento automático, lembretes de consulta, triagem inicial de pacientes.",
+          results: "89% redução em no-shows"
+        },
+        {
+          title: "Imobiliárias",
+          description: "Qualificação de leads, agendamento de visitas, follow-up automático.",
+          results: "156% aumento em conversões"
+        },
+        {
+          title: "Escritórios de Advocacia",
+          description: "Triagem de casos, agendamento de consultas, acompanhamento processual.",
+          results: "67% mais eficiência operacional"
+        },
+        {
+          title: "Consultorias",
+          description: "Qualificação de prospects, agendamento de reuniões, nurturing automatizado.",
+          results: "234% aumento em reuniões qualificadas"
+        },
+        {
+          title: "Lojas Físicas",
+          description: "Atendimento WhatsApp, reserva de produtos, suporte técnico automatizado.",
+          results: "78% melhoria na satisfação"
+        }
+      ]);
+      
+      // Load contacts
       setContacts([
         { id: '1', type: 'whatsapp', value: '5548992111496', icon: '📱', label: 'WhatsApp' },
         { id: '2', type: 'email', value: 'maycondouglas@deylith.dev', icon: '📧', label: 'Email' },
@@ -81,11 +167,22 @@ const Admin = () => {
         { id: '4', type: 'location', value: 'Içara, SC - Atendimento Mundial', icon: '📍', label: 'Localização' },
       ]);
 
-      // Carregar stats salvos
+      // Load saved settings
       const savedStats = localStorage.getItem('stats');
-      if (savedStats) {
-        setStats(JSON.parse(savedStats));
-      }
+      if (savedStats) setStats(JSON.parse(savedStats));
+
+      const savedTheme = localStorage.getItem('themeSettings');
+      if (savedTheme) setThemeSettings(JSON.parse(savedTheme));
+
+      const savedChat = localStorage.getItem('chatSettings');
+      if (savedChat) setChatSettings(JSON.parse(savedChat));
+
+      const savedFooter = localStorage.getItem('footerContent');
+      if (savedFooter) setFooterContent(JSON.parse(savedFooter));
+
+      const savedUseCases = localStorage.getItem('useCases');
+      if (savedUseCases) setUseCases(JSON.parse(savedUseCases));
+
     } catch (error) {
       toast({
         title: "Erro",
@@ -97,36 +194,48 @@ const Admin = () => {
 
   const saveFAQs = () => {
     localStorage.setItem('faqs', JSON.stringify(faqs));
-    toast({
-      title: "Sucesso",
-      description: "FAQs salvos com sucesso!"
-    });
+    toast({ title: "Sucesso", description: "FAQs salvos com sucesso!" });
   };
 
   const saveContent = () => {
     localStorage.setItem('content', JSON.stringify(content));
-    toast({
-      title: "Sucesso",
-      description: "Conteúdo salvo com sucesso!"
-    });
+    toast({ title: "Sucesso", description: "Conteúdo salvo com sucesso!" });
   };
 
   const saveContacts = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
-    toast({
-      title: "Sucesso",
-      description: "Contatos salvos com sucesso!"
-    });
+    toast({ title: "Sucesso", description: "Contatos salvos com sucesso!" });
   };
 
   const saveStats = () => {
     localStorage.setItem('stats', JSON.stringify(stats));
-    toast({
-      title: "Sucesso",
-      description: "Estatísticas salvas com sucesso!"
-    });
+    toast({ title: "Sucesso", description: "Estatísticas salvas com sucesso!" });
   };
 
+  const saveUseCases = () => {
+    localStorage.setItem('useCases', JSON.stringify(useCases));
+    toast({ title: "Sucesso", description: "Casos de uso salvos com sucesso!" });
+  };
+
+  const saveThemeSettings = () => {
+    localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+    // Apply theme changes to CSS variables
+    document.documentElement.style.setProperty('--primary-color', themeSettings.primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', themeSettings.secondaryColor);
+    toast({ title: "Sucesso", description: "Configurações de tema salvas!" });
+  };
+
+  const saveChatSettings = () => {
+    localStorage.setItem('chatSettings', JSON.stringify(chatSettings));
+    toast({ title: "Sucesso", description: "Configurações de chat salvas!" });
+  };
+
+  const saveFooterContent = () => {
+    localStorage.setItem('footerContent', JSON.stringify(footerContent));
+    toast({ title: "Sucesso", description: "Conteúdo do rodapé salvo!" });
+  };
+
+  // FAQ functions
   const addFAQ = () => {
     const newFAQ: FAQ = {
       id: Math.max(...faqs.map(f => f.id), 0) + 1,
@@ -146,6 +255,7 @@ const Admin = () => {
     setFaqs(faqs.filter(faq => faq.id !== id));
   };
 
+  // Contact functions
   const addContact = () => {
     const newContact: Contact = {
       id: Date.now().toString(),
@@ -167,10 +277,29 @@ const Admin = () => {
     setContacts(contacts.filter(contact => contact.id !== id));
   };
 
+  // Use case functions
+  const addUseCase = () => {
+    const newUseCase: UseCase = {
+      title: '',
+      description: '',
+      results: ''
+    };
+    setUseCases([...useCases, newUseCase]);
+  };
+
+  const updateUseCase = (index: number, field: keyof UseCase, value: string) => {
+    setUseCases(useCases.map((useCase, i) => 
+      i === index ? { ...useCase, [field]: value } : useCase
+    ));
+  };
+
+  const deleteUseCase = (index: number) => {
+    setUseCases(useCases.filter((_, i) => i !== index));
+  };
+
   const handleIconUpload = (contactId: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Em produção, você faria upload para um servidor
       const reader = new FileReader();
       reader.onload = (e) => {
         const imageUrl = e.target?.result as string;
@@ -208,12 +337,14 @@ const Admin = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-5 glass-effect">
+            <TabsList className="grid w-full grid-cols-7 glass-effect">
               <TabsTrigger value="faqs">FAQs</TabsTrigger>
               <TabsTrigger value="content">Conteúdo</TabsTrigger>
               <TabsTrigger value="contacts">Contatos</TabsTrigger>
+              <TabsTrigger value="usecases">Casos de Uso</TabsTrigger>
               <TabsTrigger value="stats">Estatísticas</TabsTrigger>
-              <TabsTrigger value="settings">Configurações</TabsTrigger>
+              <TabsTrigger value="theme">Tema</TabsTrigger>
+              <TabsTrigger value="settings">Config</TabsTrigger>
             </TabsList>
 
             {/* FAQs Tab */}
@@ -467,6 +598,68 @@ const Admin = () => {
               </div>
             </TabsContent>
 
+            {/* Use Cases Tab */}
+            <TabsContent value="usecases" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Gerenciar Casos de Uso</h2>
+                <div className="flex gap-2">
+                  <Button onClick={addUseCase} className="daylight-gradient">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Caso
+                  </Button>
+                  <Button onClick={saveUseCases} variant="outline" className="neon-glow">
+                    <Save className="w-4 h-4 mr-2" />
+                    Salvar
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                {useCases.map((useCase, index) => (
+                  <Card key={index} className="glass-effect tech-card">
+                    <CardContent className="p-6">
+                      <div className="grid gap-4">
+                        <div>
+                          <Label>Título</Label>
+                          <Input
+                            value={useCase.title}
+                            onChange={(e) => updateUseCase(index, 'title', e.target.value)}
+                            placeholder="Ex: E-commerce"
+                          />
+                        </div>
+                        <div>
+                          <Label>Descrição</Label>
+                          <Textarea
+                            value={useCase.description}
+                            onChange={(e) => updateUseCase(index, 'description', e.target.value)}
+                            placeholder="Descreva como a IA ajuda neste setor..."
+                            rows={3}
+                          />
+                        </div>
+                        <div>
+                          <Label>Resultado</Label>
+                          <Input
+                            value={useCase.results}
+                            onChange={(e) => updateUseCase(index, 'results', e.target.value)}
+                            placeholder="Ex: 87% menos tempo de resposta"
+                          />
+                        </div>
+                        <div className="flex justify-end">
+                          <Button
+                            onClick={() => deleteUseCase(index)}
+                            variant="destructive"
+                            size="sm"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
             {/* Stats Tab */}
             <TabsContent value="stats" className="space-y-4">
               <div className="flex justify-between items-center">
@@ -521,11 +714,189 @@ const Admin = () => {
               </Card>
             </TabsContent>
 
+            {/* Theme Tab */}
+            <TabsContent value="theme" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Personalização Visual</h2>
+                <Button onClick={saveThemeSettings} variant="outline" className="neon-glow">
+                  <Save className="w-4 h-4 mr-2" />
+                  Salvar Tema
+                </Button>
+              </div>
+
+              <div className="grid gap-6">
+                <Card className="glass-effect tech-card">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Palette className="w-5 h-5" />
+                      Cores Principais
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <Label>Cor Primária</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.primaryColor}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, primaryColor: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label>Cor Secundária</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.secondaryColor}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, secondaryColor: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label>Início do Gradiente</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.gradientStart}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, gradientStart: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label>Final do Gradiente</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.gradientEnd}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, gradientEnd: e.target.value })}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="glass-effect tech-card">
+                  <CardHeader>
+                    <CardTitle>Robô Virtual</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <Label>Cor Primária do Robô</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.robotPrimaryColor}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, robotPrimaryColor: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label>Cor Secundária do Robô</Label>
+                      <Input
+                        type="color"
+                        value={themeSettings.robotSecondaryColor}
+                        onChange={(e) => setThemeSettings({ ...themeSettings, robotSecondaryColor: e.target.value })}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="glass-effect tech-card">
+                  <CardHeader>
+                    <CardTitle>Efeitos Visuais</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="neon-effects"
+                        checked={themeSettings.neonEnabled}
+                        onCheckedChange={(checked) => setThemeSettings({ ...themeSettings, neonEnabled: checked })}
+                      />
+                      <Label htmlFor="neon-effects">Ativar Efeitos Neon</Label>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="glass-effect tech-card">
+                  <CardHeader>
+                    <CardTitle>Conteúdo do Rodapé</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label>Descrição da Empresa</Label>
+                      <Textarea
+                        value={footerContent.description}
+                        onChange={(e) => setFooterContent({ ...footerContent, description: e.target.value })}
+                        rows={3}
+                      />
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Título da Seção Serviços</Label>
+                        <Input
+                          value={footerContent.servicesTitle}
+                          onChange={(e) => setFooterContent({ ...footerContent, servicesTitle: e.target.value })}
+                        />
+                      </div>
+                      <div>
+                        <Label>Título da Seção Contato</Label>
+                        <Input
+                          value={footerContent.contactTitle}
+                          onChange={(e) => setFooterContent({ ...footerContent, contactTitle: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Texto de Copyright</Label>
+                      <Input
+                        value={footerContent.copyright}
+                        onChange={(e) => setFooterContent({ ...footerContent, copyright: e.target.value })}
+                      />
+                    </div>
+                    <Button onClick={saveFooterContent} className="daylight-gradient">
+                      <Save className="w-4 h-4 mr-2" />
+                      Salvar Rodapé
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
             {/* Settings Tab */}
             <TabsContent value="settings" className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Configurações</h2>
+                <Button onClick={saveChatSettings} variant="outline" className="neon-glow">
+                  <Save className="w-4 h-4 mr-2" />
+                  Salvar Config
+                </Button>
               </div>
+
+              <Card className="glass-effect tech-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MessageCircle className="w-5 h-5" />
+                    Chat com IA
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="chat-enabled"
+                      checked={chatSettings.enabled}
+                      onCheckedChange={(checked) => setChatSettings({ ...chatSettings, enabled: checked })}
+                    />
+                    <Label htmlFor="chat-enabled">Ativar Chat com IA</Label>
+                  </div>
+                  <div>
+                    <Label>Endpoint da IA</Label>
+                    <Input
+                      value={chatSettings.endpoint}
+                      onChange={(e) => setChatSettings({ ...chatSettings, endpoint: e.target.value })}
+                      placeholder="https://api.openai.com/v1/chat/completions"
+                    />
+                  </div>
+                  <div>
+                    <Label>Mensagem de Boas-vindas</Label>
+                    <Textarea
+                      value={chatSettings.welcomeMessage}
+                      onChange={(e) => setChatSettings({ ...chatSettings, welcomeMessage: e.target.value })}
+                      rows={2}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
 
               <Card className="glass-effect tech-card">
                 <CardHeader>
@@ -536,16 +907,15 @@ const Admin = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-foreground/70">
-                    Configurações avançadas e integrações serão implementadas em versões futuras.
+                    Configurações avançadas e integrações podem ser expandidas conforme necessário.
                   </p>
                   <div className="grid gap-4">
                     <div>
-                      <Label>URL da API</Label>
-                      <Input placeholder="https://api.deylith.dev" disabled />
-                    </div>
-                    <div>
-                      <Label>Chave de API</Label>
+                      <Label>Chave da API (OpenAI/Claude)</Label>
                       <Input type="password" placeholder="sk-..." disabled />
+                      <p className="text-xs text-foreground/60 mt-1">
+                        Configure via variáveis de ambiente para segurança
+                      </p>
                     </div>
                   </div>
                 </CardContent>
