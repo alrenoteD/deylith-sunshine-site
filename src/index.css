@@ -14,7 +14,7 @@
     --popover: 255 255 255;
     --popover-foreground: 15 23 42;
 
-    --primary: 14 165 233;
+    --primary: 30 64 175;
     --primary-foreground: 248 250 252;
 
     --secondary: 240 244 248;
@@ -31,7 +31,7 @@
 
     --border: 226 232 240;
     --input: 226 232 240;
-    --ring: 14 165 233;
+    --ring: 30 64 175;
 
     --radius: 0.5rem;
 
@@ -39,61 +39,63 @@
     --tech-purple: 139 92 246;
     --tech-pink: 236 72 153;
     --tech-orange: 249 115 22;
-    --tech-blue: 56 189 248;
+    --tech-blue: 59 130 246;
+    --tech-tertiary: 34 197 94;
 
     --sidebar-background: 255 255 255;
     --sidebar-foreground: 15 23 42;
-    --sidebar-primary: 14 165 233;
+    --sidebar-primary: 30 64 175;
     --sidebar-primary-foreground: 248 250 252;
     --sidebar-accent: 240 244 248;
     --sidebar-accent-foreground: 15 23 42;
     --sidebar-border: 226 232 240;
-    --sidebar-ring: 14 165 233;
+    --sidebar-ring: 30 64 175;
   }
 
   .dark {
     --background: 2 6 23;
     --foreground: 248 250 252;
 
-    --card: 15 16 26;
+    --card: 15 23 42;
     --card-foreground: 248 250 252;
 
-    --popover: 15 16 26;
+    --popover: 15 23 42;
     --popover-foreground: 248 250 252;
 
-    --primary: 56 189 248;
+    --primary: 59 130 246;
     --primary-foreground: 2 6 23;
 
-    --secondary: 30 32 48;
+    --secondary: 30 41 59;
     --secondary-foreground: 248 250 252;
 
-    --muted: 30 32 48;
+    --muted: 30 41 59;
     --muted-foreground: 148 163 184;
 
-    --accent: 30 32 48;
+    --accent: 30 41 59;
     --accent-foreground: 248 250 252;
 
     --destructive: 239 68 68;
     --destructive-foreground: 248 250 252;
 
-    --border: 45 48 70;
-    --input: 45 48 70;
-    --ring: 56 189 248;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 59 130 246;
 
-    /* Dark tech theme */
+    /* Dark tech theme - navy blue instead of brown */
     --tech-purple: 139 92 246;
     --tech-pink: 236 72 153;
     --tech-orange: 249 115 22;
-    --tech-blue: 56 189 248;
+    --tech-blue: 59 130 246;
+    --tech-tertiary: 34 197 94;
 
     --sidebar-background: 2 6 23;
     --sidebar-foreground: 248 250 252;
-    --sidebar-primary: 56 189 248;
+    --sidebar-primary: 59 130 246;
     --sidebar-primary-foreground: 2 6 23;
-    --sidebar-accent: 30 32 48;
+    --sidebar-accent: 30 41 59;
     --sidebar-accent-foreground: 248 250 252;
-    --sidebar-border: 45 48 70;
-    --sidebar-ring: 56 189 248;
+    --sidebar-border: 51 65 85;
+    --sidebar-ring: 59 130 246;
   }
 }
 
@@ -110,7 +112,7 @@
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent;
   }
   
   .hero-gradient {
@@ -118,15 +120,15 @@
   }
   
   .daylight-gradient {
-    @apply bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 dark:from-yellow-500 dark:via-orange-600 dark:to-pink-600;
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 dark:from-blue-600 dark:via-purple-600 dark:to-pink-600 text-white font-semibold shadow-lg;
   }
 
   .glass-effect {
-    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-800/40 border border-white/30 dark:border-slate-700/50 shadow-lg;
+    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-800/80 border border-white/30 dark:border-slate-700/50 shadow-lg;
   }
 
   .neon-glow {
-    @apply shadow-[0_0_20px_rgba(168,85,247,0.4)] dark:shadow-[0_0_30px_rgba(168,85,247,0.6)];
+    @apply shadow-[0_0_20px_rgba(59,130,246,0.4)] dark:shadow-[0_0_30px_rgba(59,130,246,0.6)];
   }
 
   .tech-card {
@@ -144,8 +146,8 @@
   /* Tech patterns */
   .bg-neon-grid {
     background-image: 
-      linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
   }
 }
@@ -175,8 +177,8 @@
 }
 
 @keyframes pulse-neon {
-  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
-  50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(168, 85, 247, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.4); }
 }
 
 @keyframes slide-in-left {
@@ -187,6 +189,11 @@
 @keyframes fade-in {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .animate-float {
@@ -205,14 +212,20 @@
   animation: fade-in 0.8s ease-out forwards;
 }
 
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
 /* Button improvements for better visibility */
 .daylight-gradient {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899) !important;
   color: white !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  border: none !important;
 }
 
 .daylight-gradient:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
 }

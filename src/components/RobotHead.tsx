@@ -1,7 +1,8 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTheme } from 'next-themes';
-import { MessageCircle } from 'lucide-react';
+import ChatWidget from './ChatWidget';
+import ContactPopup from './ContactPopup';
 
 interface RobotHeadProps {
   primaryColor?: string;
@@ -10,8 +11,8 @@ interface RobotHeadProps {
 }
 
 const RobotHead: React.FC<RobotHeadProps> = ({ 
-  primaryColor = '#8B5CF6', 
-  secondaryColor = '#EC4899',
+  primaryColor = '#1e40af', 
+  secondaryColor = '#3b82f6',
   onChatClick 
 }) => {
   const robotRef = useRef<HTMLDivElement>(null);
@@ -19,7 +20,24 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [expression, setExpression] = useState<'neutral' | 'happy' | 'excited' | 'thinking'>('neutral');
   const [isBlinking, setIsBlinking] = useState(false);
+  const [showChatWidget, setShowChatWidget] = useState(false);
+  const [showContactPopup, setShowContactPopup] = useState(false);
+  const [robotPosition, setRobotPosition] = useState({ x: 0, y: 0 });
   const { theme } = useTheme();
+
+  // Get chat settings from localStorage
+  const [chatSettings, setChatSettings] = useState({
+    enabled: true,
+    endpoint: '',
+    welcomeMessage: 'Olá! Como posso ajudar você hoje?'
+  });
+
+  useEffect(() => {
+    const savedChat = localStorage.getItem('chatSettings');
+    if (savedChat) {
+      setChatSettings(JSON.parse(savedChat));
+    }
+  }, []);
 
   // Calculate eye movement based on mouse position
   const updateEyePosition = useCallback((e: MouseEvent) => {
@@ -28,19 +46,21 @@ const RobotHead: React.FC<RobotHeadProps> = ({
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
+      setRobotPosition({ x: centerX, y: centerY });
+      
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
       
       // Limit eye movement range
-      const maxMove = 3;
-      const eyeX = Math.max(-maxMove, Math.min(maxMove, deltaX / 30));
-      const eyeY = Math.max(-maxMove, Math.min(maxMove, deltaY / 30));
+      const maxMove = 4;
+      const eyeX = Math.max(-maxMove, Math.min(maxMove, deltaX / 25));
+      const eyeY = Math.max(-maxMove, Math.min(maxMove, deltaY / 25));
       
       setEyePosition({ x: eyeX, y: eyeY });
       
       // Head rotation based on mouse
-      const rotateX = (deltaY / window.innerHeight) * 15;
-      const rotateY = (deltaX / window.innerWidth) * 15;
+      const rotateX = (deltaY / window.innerHeight) * 10;
+      const rotateY = (deltaX / window.innerWidth) * 10;
       
       setMousePosition({ x: rotateY, y: -rotateX });
     }
@@ -58,13 +78,17 @@ const RobotHead: React.FC<RobotHeadProps> = ({
       const elementText = target.textContent?.toLowerCase() || '';
       if (elementText.includes('fale conosco') || elementText.includes('whatsapp')) {
         setExpression('excited');
+        setShowContactPopup(true);
       } else if (elementText.includes('benefícios')) {
         setExpression('happy');
+        setShowContactPopup(false);
       } else {
         setExpression('thinking');
+        setShowContactPopup(false);
       }
     } else {
       setExpression('neutral');
+      setShowContactPopup(false);
     }
   }, []);
 
@@ -92,13 +116,13 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const getRobotColors = () => {
     if (theme === 'dark') {
       return {
-        head: 'from-indigo-600 to-purple-700',
+        head: 'from-slate-800 to-blue-900',
         accent: primaryColor,
         secondary: secondaryColor
       };
     }
     return {
-      head: 'from-purple-400 to-pink-500',
+      head: 'from-blue-400 to-indigo-500',
       accent: primaryColor,
       secondary: secondaryColor
     };
@@ -109,9 +133,9 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const getEyeShape = () => {
     switch (expression) {
       case 'happy':
-        return 'rounded-full';
+        return 'rounded-full scale-110';
       case 'excited':
-        return 'rounded-lg';
+        return 'rounded-lg scale-125';
       case 'thinking':
         return 'rounded-full scale-90';
       default:
@@ -122,84 +146,126 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   const getMouthShape = () => {
     switch (expression) {
       case 'happy':
-        return 'w-6 h-2 bg-white/80 rounded-full';
+        return 'w-6 h-3 bg-white/90 rounded-full';
       case 'excited':
-        return 'w-5 h-3 bg-white/80 rounded-full';
+        return 'w-5 h-4 bg-white/90 rounded-full';
       case 'thinking':
         return 'w-3 h-1 bg-white/60 rounded-full';
       default:
-        return 'w-4 h-1 bg-white/60 rounded-full';
+        return 'w-4 h-1 bg-white/70 rounded-full';
     }
   };
 
-  return (
-    <div className="fixed bottom-8 right-8 z-50">
-      <div
-        ref={robotRef}
-        className="w-20 h-20 perspective-1000 cursor-pointer"
-        style={{
-          transform: `rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`,
-          transition: 'transform 0.1s ease-out'
-        }}
-        onClick={onChatClick}
-      >
-        <div className="relative w-full h-full transform-gpu hover:scale-110 transition-transform duration-300">
-          {/* Robot head */}
-          <div className={`w-16 h-16 mx-auto bg-gradient-to-br ${colors.head} rounded-2xl shadow-lg border-2 border-white/20 relative overflow-hidden`}>
-            {/* Shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent animate-pulse"></div>
-            
-            {/* Eyes */}
-            <div className="flex justify-center items-center mt-4 space-x-2">
-              <div 
-                className={`w-3 h-3 bg-cyan-400 shadow-lg shadow-cyan-400/50 transition-all duration-200 ${getEyeShape()} ${isBlinking ? 'scale-y-0' : 'scale-y-100'}`}
-                style={{
-                  transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`
-                }}
-              >
-                <div className="w-1 h-1 bg-white/80 rounded-full ml-0.5 mt-0.5"></div>
-              </div>
-              <div 
-                className={`w-3 h-3 bg-cyan-400 shadow-lg shadow-cyan-400/50 transition-all duration-200 ${getEyeShape()} ${isBlinking ? 'scale-y-0' : 'scale-y-100'}`}
-                style={{
-                  transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`
-                }}
-              >
-                <div className="w-1 h-1 bg-white/80 rounded-full ml-0.5 mt-0.5"></div>
-              </div>
-            </div>
-            
-            {/* Mouth */}
-            <div className="flex justify-center mt-2">
-              <div className={getMouthShape()}></div>
-            </div>
-            
-            {/* Antenna */}
-            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-              <div className="w-1 h-3 bg-white/40 rounded-full"></div>
-              <div 
-                className="w-2 h-2 rounded-full -mt-1 animate-ping"
-                style={{ backgroundColor: colors.accent }}
-              ></div>
-            </div>
+  const handleRobotClick = () => {
+    if (chatSettings.enabled && chatSettings.endpoint) {
+      setShowChatWidget(!showChatWidget);
+    } else {
+      // Fallback to WhatsApp
+      const message = "Olá! Gostaria de conversar com um agente sobre IA para minha empresa.";
+      window.open(`https://wa.me/5548992111496?text=${encodeURIComponent(message)}`, '_blank');
+    }
+  };
 
-            {/* Status indicators */}
-            <div className="absolute top-1 right-1 flex space-x-1">
-              <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>
-              <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+  const handleContactClick = (type: string, value: string) => {
+    switch (type) {
+      case 'whatsapp':
+        const message = "Olá! Gostaria de conversar sobre os serviços de IA.";
+        window.open(`https://wa.me/${value}?text=${encodeURIComponent(message)}`, '_blank');
+        break;
+      case 'phone':
+        window.open(`tel:${value}`, '_blank');
+        break;
+      case 'email':
+        window.open(`mailto:${value}`, '_blank');
+        break;
+      case 'website':
+        window.open(`https://${value}`, '_blank');
+        break;
+    }
+    setShowContactPopup(false);
+  };
+
+  return (
+    <>
+      <div className="fixed bottom-8 right-8 z-50">
+        <div
+          ref={robotRef}
+          className="w-20 h-20 perspective-1000 cursor-pointer"
+          style={{
+            transform: `rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`,
+            transition: 'transform 0.1s ease-out'
+          }}
+          onClick={handleRobotClick}
+        >
+          <div className="relative w-full h-full transform-gpu hover:scale-110 transition-transform duration-300">
+            {/* Robot head */}
+            <div className={`w-16 h-16 mx-auto bg-gradient-to-br ${colors.head} rounded-2xl shadow-xl border-2 border-white/30 relative overflow-hidden`}>
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent animate-pulse"></div>
+              
+              {/* Eyes */}
+              <div className="flex justify-center items-center mt-4 space-x-2">
+                <div 
+                  className={`w-3 h-3 bg-cyan-300 shadow-lg shadow-cyan-300/50 transition-all duration-200 ${getEyeShape()} ${isBlinking ? 'scale-y-0' : 'scale-y-100'}`}
+                  style={{
+                    transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`
+                  }}
+                >
+                  <div className="w-1 h-1 bg-white/90 rounded-full ml-0.5 mt-0.5"></div>
+                </div>
+                <div 
+                  className={`w-3 h-3 bg-cyan-300 shadow-lg shadow-cyan-300/50 transition-all duration-200 ${getEyeShape()} ${isBlinking ? 'scale-y-0' : 'scale-y-100'}`}
+                  style={{
+                    transform: `translate(${eyePosition.x}px, ${eyePosition.y}px)`
+                  }}
+                >
+                  <div className="w-1 h-1 bg-white/90 rounded-full ml-0.5 mt-0.5"></div>
+                </div>
+              </div>
+              
+              {/* Mouth */}
+              <div className="flex justify-center mt-2">
+                <div className={getMouthShape()}></div>
+              </div>
+              
+              {/* Antenna */}
+              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                <div className="w-1 h-3 bg-white/50 rounded-full"></div>
+                <div 
+                  className="w-2 h-2 rounded-full -mt-1 animate-ping"
+                  style={{ backgroundColor: colors.accent }}
+                ></div>
+              </div>
+
+              {/* Status indicators */}
+              <div className="absolute top-1 right-1 flex space-x-1">
+                <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              </div>
+            </div>
+            
+            {/* Chat indicator */}
+            <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+              <div className="w-3 h-3 bg-white rounded-full"></div>
             </div>
           </div>
-          
-          {/* Chat indicator */}
-          <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-            <MessageCircle className="w-3 h-3 text-white" />
-          </div>
-          
-          {/* 3D shadow */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl pointer-events-none"></div>
         </div>
       </div>
-    </div>
+
+      <ContactPopup
+        isVisible={showContactPopup}
+        position={robotPosition}
+        onContactClick={handleContactClick}
+      />
+
+      <ChatWidget
+        isOpen={showChatWidget}
+        onClose={() => setShowChatWidget(false)}
+        position={robotPosition}
+        endpoint={chatSettings.endpoint}
+        welcomeMessage={chatSettings.welcomeMessage}
+      />
+    </>
   );
 };
 

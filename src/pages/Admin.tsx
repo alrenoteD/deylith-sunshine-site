@@ -59,6 +59,7 @@ interface ThemeSettings {
   neonEnabled: boolean;
   robotPrimaryColor: string;
   robotSecondaryColor: string;
+  techTertiary: string;
 }
 
 interface ChatSettings {
@@ -75,6 +76,16 @@ interface FooterContent {
   copyright: string;
 }
 
+interface CustomSection {
+  id: string;
+  title: string;
+  content: string;
+  backgroundColor: string;
+  textColor: string;
+  showCard: boolean;
+  enabled: boolean;
+}
+
 const Admin = () => {
   const [mounted, setMounted] = useState(false);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
@@ -88,13 +99,14 @@ const Admin = () => {
     availability: '24/7'
   });
   const [themeSettings, setThemeSettings] = useState<ThemeSettings>({
-    primaryColor: '#8B5CF6',
-    secondaryColor: '#EC4899',
-    gradientStart: '#8B5CF6',
-    gradientEnd: '#EC4899',
+    primaryColor: '#1e40af',
+    secondaryColor: '#3b82f6',
+    gradientStart: '#3b82f6',
+    gradientEnd: '#8b5cf6',
     neonEnabled: true,
-    robotPrimaryColor: '#8B5CF6',
-    robotSecondaryColor: '#EC4899'
+    robotPrimaryColor: '#1e40af',
+    robotSecondaryColor: '#3b82f6',
+    techTertiary: '#22c55e'
   });
   const [chatSettings, setChatSettings] = useState<ChatSettings>({
     enabled: true,
@@ -108,6 +120,26 @@ const Admin = () => {
     contactTitle: 'Contato',
     copyright: 'Todos os direitos reservados.'
   });
+  const [customSections, setCustomSections] = useState([
+    {
+      id: '1',
+      title: 'Sobre o Fundador',
+      content: 'Maycon Douglas é especialista em IA e automação, com mais de 5 anos de experiência desenvolvendo soluções inteligentes para empresas de todos os portes.',
+      backgroundColor: 'bg-background',
+      textColor: 'text-foreground',
+      showCard: true,
+      enabled: true
+    },
+    {
+      id: '2',
+      title: 'Nossa Missão',
+      content: 'Democratizar o acesso à inteligência artificial, tornando-a acessível e prática para empresas que buscam inovação e eficiência operacional.',
+      backgroundColor: 'bg-muted/50',
+      textColor: 'text-foreground',
+      showCard: false,
+      enabled: true
+    }
+  ]);
   const [activeTab, setActiveTab] = useState('faqs');
   const { toast } = useToast();
 
@@ -183,6 +215,9 @@ const Admin = () => {
       const savedUseCases = localStorage.getItem('useCases');
       if (savedUseCases) setUseCases(JSON.parse(savedUseCases));
 
+      const savedCustomSections = localStorage.getItem('customSections');
+      if (savedCustomSections) setCustomSections(JSON.parse(savedCustomSections));
+
     } catch (error) {
       toast({
         title: "Erro",
@@ -222,6 +257,7 @@ const Admin = () => {
     // Apply theme changes to CSS variables
     document.documentElement.style.setProperty('--primary-color', themeSettings.primaryColor);
     document.documentElement.style.setProperty('--secondary-color', themeSettings.secondaryColor);
+    document.documentElement.style.setProperty('--tech-tertiary', themeSettings.techTertiary);
     toast({ title: "Sucesso", description: "Configurações de tema salvas!" });
   };
 
@@ -233,6 +269,11 @@ const Admin = () => {
   const saveFooterContent = () => {
     localStorage.setItem('footerContent', JSON.stringify(footerContent));
     toast({ title: "Sucesso", description: "Conteúdo do rodapé salvo!" });
+  };
+
+  const saveCustomSections = () => {
+    localStorage.setItem('customSections', JSON.stringify(customSections));
+    toast({ title: "Sucesso", description: "Seções personalizadas salvas!" });
   };
 
   // FAQ functions
@@ -309,6 +350,30 @@ const Admin = () => {
     }
   };
 
+  // Custom sections functions
+  const addCustomSection = () => {
+    const newSection = {
+      id: Date.now().toString(),
+      title: 'Nova Seção',
+      content: 'Conteúdo da nova seção...',
+      backgroundColor: 'bg-background',
+      textColor: 'text-foreground',
+      showCard: true,
+      enabled: true
+    };
+    setCustomSections([...customSections, newSection]);
+  };
+
+  const updateCustomSection = (id: string, field: string, value: any) => {
+    setCustomSections(customSections.map(section => 
+      section.id === id ? { ...section, [field]: value } : section
+    ));
+  };
+
+  const deleteCustomSection = (id: string) => {
+    setCustomSections(customSections.filter(section => section.id !== id));
+  };
+
   if (!mounted) {
     return null;
   }
@@ -337,13 +402,14 @@ const Admin = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-7 glass-effect">
+            <TabsList className="grid w-full grid-cols-8 glass-effect">
               <TabsTrigger value="faqs">FAQs</TabsTrigger>
               <TabsTrigger value="content">Conteúdo</TabsTrigger>
               <TabsTrigger value="contacts">Contatos</TabsTrigger>
               <TabsTrigger value="usecases">Casos de Uso</TabsTrigger>
               <TabsTrigger value="stats">Estatísticas</TabsTrigger>
               <TabsTrigger value="theme">Tema</TabsTrigger>
+              <TabsTrigger value="sections">Seções</TabsTrigger>
               <TabsTrigger value="settings">Config</TabsTrigger>
             </TabsList>
 
@@ -732,7 +798,7 @@ const Admin = () => {
                       Cores Principais
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="grid gap-4 md:grid-cols-2">
+                  <CardContent className="grid gap-4 md:grid-cols-3">
                     <div>
                       <Label>Cor Primária</Label>
                       <Input
@@ -750,19 +816,13 @@ const Admin = () => {
                       />
                     </div>
                     <div>
-                      <Label>Início do Gradiente</Label>
+                      <Label>Cor Terciária</Label>
                       <Input
                         type="color"
-                        value={themeSettings.gradientStart}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, gradientStart: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <Label>Final do Gradiente</Label>
-                      <Input
-                        type="color"
-                        value={themeSettings.gradientEnd}
-                        onChange={(e) => setThemeSettings({ ...themeSettings, gradientEnd: e.target.value })}
+                        value="#22c55e"
+                        onChange={(e) => {
+                          document.documentElement.style.setProperty('--tech-tertiary', e.target.value);
+                        }}
                       />
                     </div>
                   </CardContent>
@@ -853,6 +913,92 @@ const Admin = () => {
               </div>
             </TabsContent>
 
+            {/* New Custom Sections Tab */}
+            <TabsContent value="sections" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Seções Personalizadas</h2>
+                <div className="flex gap-2">
+                  <Button onClick={addCustomSection} className="daylight-gradient">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Seção
+                  </Button>
+                  <Button onClick={saveCustomSections} variant="outline" className="neon-glow">
+                    <Save className="w-4 h-4 mr-2" />
+                    Salvar
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                {customSections.map((section) => (
+                  <Card key={section.id} className="glass-effect tech-card">
+                    <CardContent className="p-6">
+                      <div className="grid gap-4">
+                        <div className="flex items-center justify-between">
+                          <Label>Seção Ativa</Label>
+                          <Switch
+                            checked={section.enabled}
+                            onCheckedChange={(checked) => updateCustomSection(section.id, 'enabled', checked)}
+                          />
+                        </div>
+                        <div>
+                          <Label>Título</Label>
+                          <Input
+                            value={section.title}
+                            onChange={(e) => updateCustomSection(section.id, 'title', e.target.value)}
+                            placeholder="Título da seção..."
+                          />
+                        </div>
+                        <div>
+                          <Label>Conteúdo</Label>
+                          <Textarea
+                            value={section.content}
+                            onChange={(e) => updateCustomSection(section.id, 'content', e.target.value)}
+                            placeholder="Conteúdo da seção (HTML permitido)..."
+                            rows={4}
+                          />
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <Label>Cor de Fundo</Label>
+                            <Input
+                              value={section.backgroundColor}
+                              onChange={(e) => updateCustomSection(section.id, 'backgroundColor', e.target.value)}
+                              placeholder="bg-background"
+                            />
+                          </div>
+                          <div>
+                            <Label>Cor do Texto</Label>
+                            <Input
+                              value={section.textColor}
+                              onChange={(e) => updateCustomSection(section.id, 'textColor', e.target.value)}
+                              placeholder="text-foreground"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <Switch
+                              checked={section.showCard}
+                              onCheckedChange={(checked) => updateCustomSection(section.id, 'showCard', checked)}
+                            />
+                            <Label>Mostrar como Card</Label>
+                          </div>
+                          <Button
+                            onClick={() => deleteCustomSection(section.id)}
+                            variant="destructive"
+                            size="sm"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
             {/* Settings Tab */}
             <TabsContent value="settings" className="space-y-4">
               <div className="flex justify-between items-center">
@@ -886,6 +1032,9 @@ const Admin = () => {
                       onChange={(e) => setChatSettings({ ...chatSettings, endpoint: e.target.value })}
                       placeholder="https://api.openai.com/v1/chat/completions"
                     />
+                    <p className="text-xs text-foreground/60 mt-1">
+                      Configure o endpoint do seu serviço de IA (OpenAI, Claude, etc.)
+                    </p>
                   </div>
                   <div>
                     <Label>Mensagem de Boas-vindas</Label>
