@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { MessageCircle, Save, Download } from 'lucide-react';
+import { MessageCircle, Save, Download, Info } from 'lucide-react';
 
 interface ChatSettings {
   enabled: boolean;
@@ -30,7 +30,7 @@ const ChatSettingsComponent: React.FC<ChatSettingsProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-2xl font-bold">Configurações</h2>
         <div className="flex gap-2">
           <Button onClick={onDownloadLogo} variant="outline" className="neon-glow">
@@ -60,6 +60,7 @@ const ChatSettingsComponent: React.FC<ChatSettingsProps> = ({
             />
             <Label htmlFor="chat-enabled">Ativar Chat com IA no Robô</Label>
           </div>
+          
           <div>
             <Label>Endpoint da IA</Label>
             <Input
@@ -71,25 +72,46 @@ const ChatSettingsComponent: React.FC<ChatSettingsProps> = ({
               Configure o endpoint do seu serviço de IA (OpenAI, Claude, etc.)
             </p>
           </div>
+
           <div>
-            <Label>Código Embed do Chat</Label>
+            <div className="flex items-center gap-2 mb-2">
+              <Label>Código Embed do Chat</Label>
+              <Info className="w-4 h-4 text-blue-500" />
+            </div>
             <Textarea
               value={chatSettings.embedCode}
               onChange={(e) => setChatSettings({ ...chatSettings, embedCode: e.target.value })}
-              placeholder="Cole aqui o código embed do seu chat (iframe, script, etc.)"
+              placeholder='Exemplo: <iframe src="https://widget.intercom.io/widget/..." width="100%" height="400"></iframe>'
               rows={4}
+              className="font-mono text-sm"
             />
-            <p className="text-xs text-foreground/60 mt-1">
-              Código HTML para incorporar um chat externo (Tawk.to, Intercom, etc.)
-            </p>
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mt-2">
+              <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">
+                <strong>Como usar o código embed:</strong>
+              </p>
+              <ul className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+                <li>• Para Tawk.to: Copie o código JavaScript fornecido</li>
+                <li>• Para Intercom: Use o iframe do widget</li>
+                <li>• Para Zendesk: Cole o snippet do Web Widget</li>
+                <li>• Para Crisp: Insira o código de instalação</li>
+              </ul>
+              <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                Se preenchido, substituirá o chat interno e mostrará seu widget externo.
+              </p>
+            </div>
           </div>
+
           <div>
             <Label>Mensagem de Boas-vindas</Label>
             <Textarea
               value={chatSettings.welcomeMessage}
               onChange={(e) => setChatSettings({ ...chatSettings, welcomeMessage: e.target.value })}
               rows={2}
+              placeholder="Olá! Como posso ajudar você hoje?"
             />
+            <p className="text-xs text-foreground/60 mt-1">
+              Usada apenas quando não há código embed configurado
+            </p>
           </div>
         </CardContent>
       </Card>

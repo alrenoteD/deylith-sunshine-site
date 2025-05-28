@@ -53,18 +53,25 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
   // Load embed code when widget opens
   useEffect(() => {
     if (isOpen && embedCode && embedRef.current) {
+      // Clear previous content
+      embedRef.current.innerHTML = '';
+      
+      // Insert the embed code
       embedRef.current.innerHTML = embedCode;
       
       // Execute any scripts in the embed code
       const scripts = embedRef.current.querySelectorAll('script');
       scripts.forEach(script => {
         const newScript = document.createElement('script');
+        Array.from(script.attributes).forEach(attr => {
+          newScript.setAttribute(attr.name, attr.value);
+        });
         if (script.src) {
           newScript.src = script.src;
         } else {
           newScript.textContent = script.textContent;
         }
-        document.head.appendChild(newScript);
+        script.parentNode?.replaceChild(newScript, script);
       });
     }
   }, [isOpen, embedCode]);
@@ -122,19 +129,29 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
 
   if (!isOpen) return null;
 
+  // Calculate responsive positioning
+  const isMobile = window.innerWidth < 768;
+  const widgetWidth = isMobile ? Math.min(320, window.innerWidth - 32) : 320;
+  const widgetHeight = isMobile ? Math.min(400, window.innerHeight - 100) : 400;
+  
+  const leftPosition = isMobile ? 16 : Math.min(position.x, window.innerWidth - widgetWidth - 16);
+  const topPosition = isMobile ? 80 : Math.max(position.y - widgetHeight, 20);
+
   return (
     <Card 
-      className="fixed z-[60] w-80 h-96 bg-background/95 backdrop-blur-lg border-primary/20 shadow-2xl"
+      className="fixed z-[60] bg-background/95 backdrop-blur-lg border-primary/20 shadow-2xl"
       style={{
-        left: Math.min(position.x, window.innerWidth - 320),
-        top: Math.max(position.y - 400, 20),
+        width: `${widgetWidth}px`,
+        height: `${widgetHeight}px`,
+        left: `${leftPosition}px`,
+        top: `${topPosition}px`,
       }}
     >
       <div className="flex flex-col h-full">
-        <div className="flex items-center justify-between p-4 border-b border-primary/20">
+        <div className="flex items-center justify-between p-3 md:p-4 border-b border-primary/20">
           <div className="flex items-center gap-2">
-            <MessageCircle className="w-5 h-5 text-primary" />
-            <span className="font-semibold">Chat IA</span>
+            <MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+            <span className="font-semibold text-sm md:text-base">Chat IA</span>
           </div>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="w-4 h-4" />
@@ -142,25 +159,29 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
         </div>
 
         {embedCode ? (
-          <div className="flex-1 p-4">
-            <div ref={embedRef} className="w-full h-full" />
+          <div className="flex-1 p-2 md:p-4 overflow-hidden">
+            <div 
+              ref={embedRef} 
+              className="w-full h-full overflow-auto"
+              style={{ minHeight: '200px' }}
+            />
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
+                    className={`max-w-[85%] md:max-w-[80%] p-2 md:p-3 rounded-lg ${
                       message.isUser
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted text-foreground'
                     }`}
                   >
-                    <p className="text-sm">{message.text}</p>
+                    <p className="text-xs md:text-sm">{message.text}</p>
                     <span className="text-xs opacity-70">
                       {message.timestamp.toLocaleTimeString()}
                     </span>
@@ -169,15 +190,15 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-muted p-3 rounded-lg">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                  <div className="bg-muted p-2 md:p-3 rounded-lg">
+                    <Loader2 className="w-3 h-3 md:w-4 md:h-4 animate-spin" />
                   </div>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-4 border-t border-primary/20">
+            <div className="p-3 md:p-4 border-t border-primary/20">
               <div className="flex gap-2">
                 <Input
                   value={inputValue}
@@ -185,9 +206,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({
                   onKeyPress={handleKeyPress}
                   placeholder="Digite sua mensagem..."
                   disabled={isLoading}
+                  className="text-sm md:text-base"
                 />
-                <Button onClick={sendMessage} disabled={isLoading || !inputValue.trim()}>
-                  <Send className="w-4 h-4" />
+                <Button 
+                  onClick={sendMessage} 
+                  disabled={isLoading || !inputValue.trim()}
+                  size="sm"
+                >
+                  <Send className="w-3 h-3 md:w-4 md:h-4" />
                 </Button>
               </div>
             </div>
