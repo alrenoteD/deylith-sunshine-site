@@ -161,7 +161,7 @@ const Charts = () => {
               Projeção de ROI - 6 Meses
             </CardTitle>
             <p className="text-sm text-center text-foreground/60">
-              Exemplo baseado em agente de R$ 1.000/mês com economia de R$ 11.200/mês
+              Baseado em agente de R$ 1.000/mês com economia de R$ 11.200/mês
             </p>
           </CardHeader>
           <CardContent>
@@ -210,55 +210,111 @@ const Charts = () => {
               </LineChart>
             </ResponsiveContainer>
             
-            {/* Detailed explanation */}
-            <div className="mt-6 space-y-4">
-              <h4 className="text-lg font-semibold gradient-text text-center mb-4">
-                Como Calculamos o ROI
+            {/* Detailed ROI Logic Explanation */}
+            <div className="mt-8 space-y-6">
+              <h4 className="text-xl font-bold gradient-text text-center mb-6">
+                📊 Metodologia de Cálculo do ROI
               </h4>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/20">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-4 h-0.5 bg-red-500 mr-2"></div>
-                    <p className="text-red-400 font-bold">Linha Vermelha - Investimento</p>
-                  </div>
-                  <p className="text-sm text-foreground/70">
-                    <strong>Mês 1:</strong> R$ 5.000 (desenvolvimento inicial)<br/>
-                    <strong>Mês 2-6:</strong> R$ 1.000/mês (manutenção)<br/>
-                    <em>Total investido em 6 meses: R$ 10.000</em>
-                  </p>
+              {/* Formula */}
+              <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-6 rounded-lg border border-purple-500/20">
+                <h5 className="text-lg font-semibold gradient-text mb-4 text-center">💡 Fórmula Utilizada</h5>
+                <div className="text-center font-mono text-lg bg-black/20 p-4 rounded-lg mb-4">
+                  ROI = ((Economia Total - Investimento Total) / Investimento Total) × 100
                 </div>
-                
-                <div className="text-center p-4 bg-green-500/10 rounded-lg border border-green-500/20">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-4 h-0.5 bg-green-500 mr-2"></div>
-                    <p className="text-green-400 font-bold">Linha Verde - Economia</p>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="text-center">
+                    <div className="font-semibold text-green-400">Economia Total</div>
+                    <div className="text-foreground/70">Soma das economias mensais acumuladas</div>
                   </div>
-                  <p className="text-sm text-foreground/70">
-                    Economia progressiva comparado aos custos de funcionários CLT:<br/>
-                    <strong>R$ 11.200/mês</strong> quando totalmente implementado<br/>
-                    <em>Baseado na diferença de custos do gráfico anterior</em>
-                  </p>
-                </div>
-                
-                <div className="text-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                  <div className="flex items-center justify-center mb-2">
-                    <div className="w-4 h-0.5 bg-purple-500 mr-2"></div>
-                    <p className="text-purple-400 font-bold">Linha Roxa - Lucro Líquido</p>
+                  <div className="text-center">
+                    <div className="font-semibold text-red-400">Investimento Total</div>
+                    <div className="text-foreground/70">Desenvolvimento + Manutenção mensal</div>
                   </div>
-                  <p className="text-sm text-foreground/70">
-                    <strong>ROI Positivo a partir do 3º mês</strong><br/>
-                    Lucro acumulado em 6 meses: <strong>R$ 32.000</strong><br/>
-                    <em>Economia - Investimento = Lucro Real</em>
-                  </p>
+                  <div className="text-center">
+                    <div className="font-semibold text-purple-400">ROI Final</div>
+                    <div className="text-foreground/70">Retorno percentual sobre investimento</div>
+                  </div>
                 </div>
               </div>
-              
-              <div className="mt-4 p-4 bg-primary/10 rounded-lg border border-primary/20">
-                <p className="text-center text-sm text-foreground/80">
-                  💡 <strong>Conclusão:</strong> Em 6 meses, para cada R$ 1 investido, você obtém R$ 4,20 de retorno. 
-                  Isso representa um <strong>ROI de 320%</strong> no período.
-                </p>
+
+              {/* Step by step calculation */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h5 className="text-lg font-semibold gradient-text">🔢 Componentes do Cálculo</h5>
+                  
+                  <div className="space-y-3">
+                    <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <div className="font-semibold text-blue-400 mb-2">1. Custo CLT (Mensal)</div>
+                      <ul className="text-sm space-y-1 text-foreground/70">
+                        <li>• Salários: R$ 7.000 (2-3 funcionários)</li>
+                        <li>• Benefícios (40%): R$ 2.800</li>
+                        <li>• Encargos (80%): R$ 5.600</li>
+                        <li><strong>Total: R$ 15.400</strong></li>
+                      </ul>
+                    </div>
+                    
+                    <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <div className="font-semibold text-green-400 mb-2">2. Custo IA (Mensal)</div>
+                      <ul className="text-sm space-y-1 text-foreground/70">
+                        <li>• Desenvolvimento: R$ 5.000 (primeiro mês)</li>
+                        <li>• Manutenção: R$ 1.000/mês</li>
+                        <li>• Hosting e APIs: Inclusos</li>
+                        <li><strong>Economia: R$ 14.400/mês</strong></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h5 className="text-lg font-semibold gradient-text">📈 Projeção Progressiva</h5>
+                  
+                  <div className="space-y-3">
+                    <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                      <div className="font-semibold text-yellow-400 mb-2">Meses 1-2: Implementação</div>
+                      <div className="text-sm text-foreground/70">
+                        Economia gradual conforme sistema é ajustado e otimizado
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <div className="font-semibold text-purple-400 mb-2">Meses 3-6: Operação Plena</div>
+                      <div className="text-sm text-foreground/70">
+                        Economia máxima atingida. Sistema operando 24/7 com eficiência total
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
+                      <div className="font-semibold text-cyan-400 mb-2">ROI no 6º Mês</div>
+                      <div className="text-sm text-foreground/70">
+                        <strong>320% de retorno</strong> = R$ 32.000 ganho para R$ 10.000 investidos
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional benefits */}
+              <div className="bg-gradient-to-r from-slate-500/10 to-gray-500/10 p-6 rounded-lg border border-slate-500/20">
+                <h5 className="text-lg font-semibold gradient-text mb-4 text-center">🎯 Benefícios Não Quantificados</h5>
+                <div className="grid md:grid-cols-4 gap-4 text-center text-sm">
+                  <div>
+                    <div className="font-semibold text-blue-400">Disponibilidade</div>
+                    <div className="text-foreground/70">24/7 vs 8h/dia</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-green-400">Escalabilidade</div>
+                    <div className="text-foreground/70">Crescimento instantâneo</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-purple-400">Consistência</div>
+                    <div className="text-foreground/70">0% variação humana</div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-orange-400">Eficiência</div>
+                    <div className="text-foreground/70">Melhoria contínua</div>
+                  </div>
+                </div>
               </div>
             </div>
           </CardContent>

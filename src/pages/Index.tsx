@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Services from '../components/Services';
 import Benefits from '../components/Benefits';
+import EconomySimulator from '../components/EconomySimulator';
 import Charts from '../components/Charts';
 import UseCases from '../components/UseCases';
 import FAQ from '../components/FAQ';
@@ -52,17 +53,21 @@ const Index = () => {
         <main>
           <Hero />
           
-          {/* About section with purple/pink gradient */}
-          <section className="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-orange-900/30">
+          {/* About section with updated gradient */}
+          <section className="py-16 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/30 dark:via-teal-900/30 dark:to-cyan-900/30">
             <About />
           </section>
           
           <Services />
           <Benefits />
+          
+          {/* Economy Simulator - NEW */}
+          <EconomySimulator />
+          
           <Charts />
           
-          {/* Use Cases section with blue/cyan gradient */}
-          <section className="py-16 bg-gradient-to-br from-blue-50 via-cyan-50 to-emerald-50 dark:from-blue-900/30 dark:via-cyan-900/30 dark:to-emerald-900/30">
+          {/* Use Cases section with updated gradient */}
+          <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/30 dark:via-amber-900/30 dark:to-yellow-900/30">
             <UseCases />
           </section>
           
@@ -83,8 +88,8 @@ const Index = () => {
           <FAQ />
         </main>
         
-        {/* Footer with modern gradient inspired by Instagram */}
-        <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-pink-900 dark:from-slate-950 dark:via-purple-950 dark:to-pink-950">
+        {/* Footer with updated gradient */}
+        <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-black dark:from-slate-950 dark:via-gray-950 dark:to-black">
           <Footer />
         </div>
         

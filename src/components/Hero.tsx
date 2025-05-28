@@ -36,32 +36,32 @@ const Hero = () => {
           <div className="mb-8">
             <div className="inline-block p-1 rounded-full bg-gradient-to-r from-tech-purple via-tech-pink to-tech-orange mb-6">
               <div className="bg-background rounded-full px-6 py-2">
-                <span className="text-sm font-medium gradient-text">🚀 Tecnologia de Ponta em IA</span>
+                <span className="text-sm font-medium gradient-text">🚀 Soluções Inteligentes de Automação</span>
               </div>
             </div>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            {hero.title}
+            Transformamos Processos
             <br />
             <span className="gradient-text relative">
-              {hero.highlight}
+              Empresariais com IA
               <div className="absolute -inset-1 bg-gradient-to-r from-tech-purple via-tech-pink to-tech-orange rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             </span>
           </h1>
           
           <p className="text-xl md:text-2xl text-foreground/80 mb-8 max-w-4xl mx-auto leading-relaxed">
-            {hero.subtitle}
+            Automatize tarefas repetitivas, aumente a eficiência operacional e reduza custos com nossas soluções inteligentes personalizadas
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button
               size="lg"
-              onClick={() => window.open(hero.ctaWhatsapp, '_blank')}
+              onClick={() => window.open('https://wa.me/5548992111496?text=Olá! Gostaria de solicitar uma demonstração gratuita das soluções de IA.', '_blank')}
               className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-6 shadow-lg border-0 font-semibold"
             >
               <span className="flex items-center gap-2">
-                📱 {hero.ctaText}
+                🎯 Solicite uma Demonstração Gratuita
               </span>
             </Button>
             
@@ -75,28 +75,47 @@ const Hero = () => {
               className="text-lg px-8 py-6 border-2 hover:bg-primary/10 transition-all duration-300 tech-card neon-glow group"
             >
               <span className="group-hover:gradient-text transition-all duration-300">
-                Ver Benefícios
+                Ver Como Funciona
               </span>
             </Button>
           </div>
 
-          {/* Tech stats display */}
+          {/* Enhanced tech stats display */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Empresas Atendidas", value: "200+" },
-              { label: "Economia Média", value: "80%" },
-              { label: "Disponibilidade", value: "24/7" },
-              { label: "ROI Médio", value: "300%" }
+              { label: "Empresas Atendidas", value: "200+", icon: "🏢" },
+              { label: "Economia Média", value: "80%", icon: "💰" },
+              { label: "Disponibilidade", value: "24/7", icon: "🕐" },
+              { label: "ROI Médio", value: "320%", icon: "📈" }
             ].map((stat, index) => (
               <div
                 key={index}
-                className="glass-effect p-4 rounded-lg tech-card hover:neon-glow transition-all duration-300"
+                className="glass-effect p-4 rounded-lg tech-card hover:neon-glow transition-all duration-300 group cursor-pointer"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
+                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                  {stat.icon}
+                </div>
                 <div className="text-2xl font-bold gradient-text">{stat.value}</div>
                 <div className="text-sm text-foreground/70">{stat.label}</div>
               </div>
             ))}
+          </div>
+
+          {/* Trust indicators */}
+          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 opacity-70">
+            <div className="flex items-center gap-2 text-sm text-foreground/60">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              Certificações em IA
+            </div>
+            <div className="flex items-center gap-2 text-sm text-foreground/60">
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+              Suporte 24/7
+            </div>
+            <div className="flex items-center gap-2 text-sm text-foreground/60">
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+              Implementação Rápida
+            </div>
           </div>
         </div>
       </div>
