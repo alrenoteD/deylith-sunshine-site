@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import ChatWidget from './ChatWidget';
@@ -153,8 +152,12 @@ const RobotHead: React.FC<RobotHeadProps> = ({
   };
 
   const handleRobotClick = () => {
+    console.log('Robot clicked! Chat enabled:', chatSettings.enabled);
     if (chatSettings.enabled) {
       setShowChatWidget(!showChatWidget);
+      console.log('Chat widget toggled:', !showChatWidget);
+    } else {
+      console.log('Chat is disabled in settings');
     }
   };
 
@@ -250,6 +253,7 @@ const RobotHead: React.FC<RobotHeadProps> = ({
         robotPosition={robotPosition}
       />
 
+      {/* Chat Widget - always render if chat is enabled, control visibility with showChatWidget */}
       {chatSettings.enabled && (
         <ChatWidget
           isOpen={showChatWidget}
