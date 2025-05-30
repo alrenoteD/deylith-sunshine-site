@@ -80,28 +80,6 @@ const Hero = () => {
             </Button>
           </div>
 
-          {/* Enhanced tech stats display */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {[
-              { label: "Empresas Atendidas", value: "200+", icon: "🏢" },
-              { label: "Economia Média", value: "80%", icon: "💰" },
-              { label: "Disponibilidade", value: "24/7", icon: "🕐" },
-              { label: "ROI Médio", value: "320%", icon: "📈" }
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="glass-effect p-4 rounded-lg tech-card hover:neon-glow transition-all duration-300 group cursor-pointer"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.icon}
-                </div>
-                <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-                <div className="text-sm text-foreground/70">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
           {/* Trust indicators */}
           <div className="mt-12 flex flex-wrap justify-center items-center gap-8 opacity-70">
             <div className="flex items-center gap-2 text-sm text-foreground/60">
