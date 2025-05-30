@@ -1,5 +1,6 @@
 
 import { Button } from '@/components/ui/button';
+import { Clock, TrendingUp, DollarSign, Users, Calendar, Zap } from 'lucide-react';
 import contentData from '../data/content.json';
 
 const Hero = () => {
@@ -80,35 +81,56 @@ const Hero = () => {
             </Button>
           </div>
 
-          {/* Stats indicators - restored and mobile optimized */}
-          <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto px-4">
-            <div className="luxury-card p-4 md:p-6 rounded-xl text-center tech-card">
-              <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">24/7</div>
-              <div className="text-sm md:text-base text-foreground/70">Atendimento Contínuo</div>
+          {/* Enhanced Stats indicators with glass effect and icons */}
+          <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto px-4">
+            <div className="stats-card shimmer">
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-3">
+                  <Clock className="w-8 h-8 text-blue-500 dark:text-amber-400 mr-2" />
+                  <div className="text-2xl md:text-3xl font-bold gradient-text">24/7</div>
+                </div>
+                <div className="text-sm md:text-base text-foreground/70 font-medium">⚡ Atendimento Contínuo</div>
+                <div className="text-xs text-foreground/50 mt-1">Sem pausas ou feriados</div>
+              </div>
             </div>
             
-            <div className="luxury-card p-4 md:p-6 rounded-xl text-center tech-card">
-              <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">300%</div>
-              <div className="text-sm md:text-base text-foreground/70">ROI em 6 meses</div>
+            <div className="stats-card shimmer" style={{ animationDelay: '0.2s' }}>
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-3">
+                  <TrendingUp className="w-8 h-8 text-purple-500 dark:text-amber-400 mr-2" />
+                  <div className="text-2xl md:text-3xl font-bold gradient-text">300%</div>
+                </div>
+                <div className="text-sm md:text-base text-foreground/70 font-medium">📊 ROI em 6 meses</div>
+                <div className="text-xs text-foreground/50 mt-1">Retorno garantido</div>
+              </div>
             </div>
             
-            <div className="luxury-card p-4 md:p-6 rounded-xl text-center tech-card">
-              <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">90%</div>
-              <div className="text-sm md:text-base text-foreground/70">Economia de Custos</div>
+            <div className="stats-card shimmer" style={{ animationDelay: '0.4s' }}>
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-3">
+                  <DollarSign className="w-8 h-8 text-pink-500 dark:text-amber-400 mr-2" />
+                  <div className="text-2xl md:text-3xl font-bold gradient-text">90%</div>
+                </div>
+                <div className="text-sm md:text-base text-foreground/70 font-medium">💰 Economia de Custos</div>
+                <div className="text-xs text-foreground/50 mt-1">Redução operacional</div>
+              </div>
             </div>
           </div>
 
-          {/* Trust indicators - mobile optimized */}
+          {/* Trust indicators - mobile optimized with icons */}
           <div className="mt-8 md:mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 opacity-70 px-4">
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground/60">
+              <Zap className="w-4 h-4 text-green-500" />
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               Certificações em IA
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground/60">
+              <Users className="w-4 h-4 text-blue-500" />
               <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
               Suporte 24/7
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground/60">
+              <Calendar className="w-4 h-4 text-purple-500" />
               <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
               Implementação Rápida
             </div>

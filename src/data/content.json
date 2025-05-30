@@ -1,79 +1,132 @@
 
 {
   "hero": {
-    "title": "Transforme seu Negócio com",
-    "highlight": "Agentes IA Personalizados",
-    "subtitle": "Automação inteligente que trabalha 24/7, reduz custos em até 80% e escala seu atendimento sem limites.",
-    "ctaText": "Fale Conosco",
-    "ctaWhatsapp": "https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre agentes IA para minha empresa."
+    "title": "Transformamos Processos",
+    "highlight": "Empresariais com IA",
+    "subtitle": "Automatize tarefas repetitivas, aumente a eficiência operacional e reduza custos com nossas soluções inteligentes personalizadas",
+    "ctaText": "🎯 Solicite uma Demonstração Gratuita",
+    "ctaWhatsapp": "https://wa.me/5548992111496?text=Olá! Gostaria de solicitar uma demonstração gratuita das soluções de IA."
   },
   "about": {
     "title": "Sobre a Deylith.dev",
-    "description": "Somos especialistas em criar agentes de IA personalizados que automatizam processos, otimizam atendimento e impulsionam resultados. Nossa missão é trazer clareza e eficiência para seu negócio através da inteligência artificial.",
+    "description": "Na Deylith.dev, acreditamos que o futuro das pequenas e médias empresas está na inteligência artificial. Somos uma agência especializada em criar agentes autônomos e automações inteligentes que trabalham diretamente para você — do WhatsApp à sua agenda. Fundada por Maycon Douglas, a Deylith.dev nasceu com a missão de tornar acessível o poder da IA para qualquer tipo de negócio, em qualquer setor.",
+    "mission": "Criamos agentes com IA personalizados que executam tarefas automatizadas com eficiência, empatia e produtividade. Desde o primeiro contato com seu cliente até o agendamento, atendimento, acompanhamento e pré-venda, nossos agentes cuidam de tudo pra você.",
+    "tools": "Utilizamos ferramentas como Flowise, n8n e integrações com Google Calendar, CRMs e sistemas de mensagens (como WhatsApp Business via API), para entregar soluções robustas, escaláveis e seguras.",
     "values": [
       {
-        "title": "Inovação",
+        "title": "🚀 Inovação",
         "description": "Sempre na vanguarda da tecnologia IA"
       },
       {
-        "title": "Personalização",
+        "title": "🎯 Personalização",
         "description": "Cada solução é única para seu negócio"
       },
       {
-        "title": "Resultados",
+        "title": "📊 Resultados",
         "description": "Foco em ROI e métricas reais"
       }
     ]
   },
   "services": {
-    "title": "O que Fazemos",
-    "subtitle": "Soluções completas em automação e IA",
+    "title": "Nossos Serviços",
+    "subtitle": "Soluções completas em automação e IA personalizadas para seu negócio",
     "items": [
       {
-        "title": "Atendimento Automatizado",
+        "title": "💬 Atendentes com IA para WhatsApp",
         "description": "Chatbots inteligentes que respondem clientes 24/7 com a mesma qualidade de um atendente humano.",
         "icon": "messageCircle"
       },
       {
-        "title": "SDR Virtual",
+        "title": "📅 Agentes de agendamento automático",
+        "description": "Agendamentos automáticos sincronizados com sua agenda, sem conflitos ou erros.",
+        "icon": "calendar"
+      },
+      {
+        "title": "🎯 Qualificadores de leads",
         "description": "Agentes que qualificam leads, agendam reuniões e nutrem prospects automaticamente.",
         "icon": "target"
       },
       {
-        "title": "Automação de Processos",
+        "title": "⚙️ Automações de pré-venda e SDR",
         "description": "Automatizamos tarefas repetitivas como emissão de boletos, follow-ups e relatórios.",
         "icon": "settings"
       },
       {
-        "title": "Assistente Inteligente",
-        "description": "IA que ajuda sua equipe com informações, agendamentos e gerenciamento de tarefas.",
+        "title": "🤖 Agentes secretários pessoais",
+        "description": "IA que ajuda com agenda, lembretes, tarefas e gerenciamento pessoal.",
         "icon": "brain"
+      },
+      {
+        "title": "🏢 Soluções customizadas",
+        "description": "Para nichos específicos como clínicas, salões, vendas, petshops e MicroSaaS sob demanda.",
+        "icon": "building"
       }
     ]
   },
   "benefits": {
-    "title": "Por que Escolher Agentes IA?",
-    "subtitle": "Vantagens comprovadas para empresas de todos os portes",
+    "title": "Benefícios para seu Negócio",
+    "subtitle": "Vantagens comprovadas que transformam a operação da sua empresa",
     "items": [
       {
-        "title": "Economia de até 80%",
-        "description": "Reduza custos operacionais significativamente",
-        "percentage": "80%"
+        "title": "⚡ Atendimento 24/7",
+        "description": "Sem erros humanos e disponibilidade contínua",
+        "percentage": "24/7"
       },
       {
-        "title": "Disponibilidade 24/7",
-        "description": "Atendimento contínuo, sem pausas ou feriados",
-        "percentage": "100%"
+        "title": "📊 Leads Qualificados",
+        "description": "Geração consistente de oportunidades de negócio",
+        "percentage": "300%"
       },
       {
-        "title": "Escalabilidade Infinita",
-        "description": "Atenda milhares de clientes simultaneamente",
+        "title": "🚀 Escalabilidade",
+        "description": "Crescimento sem precisar contratar novas pessoas",
         "percentage": "∞"
       },
       {
-        "title": "ROI em 6 meses",
-        "description": "Retorno garantido do investimento",
-        "percentage": "6x"
+        "title": "📉 Redução de Custos",
+        "description": "Economia de até 90% em custos operacionais",
+        "percentage": "90%"
+      },
+      {
+        "title": "💬 Foco no Essencial",
+        "description": "Mais tempo para vender e crescer seu negócio",
+        "percentage": "ROI"
+      },
+      {
+        "title": "📅 Agendamentos Automáticos",
+        "description": "Sincronizados e organizados automaticamente",
+        "percentage": "89%"
+      }
+    ]
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "subtitle": "Processo simples e eficiente para implementar sua solução de IA",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Conversa Inicial",
+        "description": "Você entra em contato e explica seu desafio"
+      },
+      {
+        "number": "2",
+        "title": "Modelo Inicial",
+        "description": "Criamos um modelo inicial (freemium ou demo)"
+      },
+      {
+        "number": "3",
+        "title": "Treinamento",
+        "description": "Ajustamos e treinamos o agente conforme sua rotina"
+      },
+      {
+        "number": "4",
+        "title": "Ativação",
+        "description": "Ativamos a solução no seu WhatsApp e sistemas"
+      },
+      {
+        "number": "5",
+        "title": "Acompanhamento",
+        "description": "Você acompanha resultados em tempo real"
       }
     ]
   }

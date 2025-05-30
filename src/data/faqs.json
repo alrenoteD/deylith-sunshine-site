@@ -2,32 +2,42 @@
 [
   {
     "id": 1,
-    "pergunta": "O que é um agente IA?",
-    "resposta": "É um sistema inteligente que simula ações humanas repetitivas, como atendimento, agendamento e suporte, disponível 24h por dia. Nossos agentes são personalizados para cada negócio."
+    "pergunta": "❓ Preciso ter algum sistema já instalado?",
+    "resposta": "Não. Nós adaptamos os agentes à sua rotina, mesmo que você ainda faça tudo manualmente. Nossos agentes se integram com qualquer fluxo de trabalho existente."
   },
   {
     "id": 2,
-    "pergunta": "Preciso saber programar para usar um agente IA?",
-    "resposta": "Não! Nós entregamos tudo pronto e personalizado para o seu negócio, com suporte contínuo. Você só precisa nos contar como funciona sua empresa."
+    "pergunta": "🔒 Isso é seguro?",
+    "resposta": "Sim. Trabalhamos com APIs oficiais (como Z-API ou Twilio) e infraestrutura protegida com criptografia e servidores próprios. Todos os dados são tratados com máxima segurança."
   },
   {
     "id": 3,
-    "pergunta": "Quanto tempo leva para implementar?",
-    "resposta": "Normalmente entre 7 a 21 dias, dependendo da complexidade. Agentes simples podem estar funcionando em uma semana."
+    "pergunta": "🤖 A IA responde sozinha? Não vai confundir o cliente?",
+    "resposta": "Nossos agentes são treinados com prompts personalizados e reconhecem quando precisam transferir para um humano. Você sempre tem o controle total sobre as interações."
   },
   {
     "id": 4,
-    "pergunta": "Quanto custa um agente IA comparado a um funcionário?",
-    "resposta": "Um agente IA custa em média 70-80% menos que um funcionário CLT, trabalha 24/7 sem férias ou benefícios, e não comete erros por cansaço."
+    "pergunta": "⏱️ Em quanto tempo tudo fica pronto?",
+    "resposta": "Agentes simples podem estar ativos no mesmo dia. Soluções mais completas levam de 2 a 5 dias. Começamos sempre com um modelo de teste."
   },
   {
     "id": 5,
-    "pergunta": "O agente substitui completamente funcionários?",
-    "resposta": "Não necessariamente. Ele automatiza tarefas repetitivas, liberando sua equipe para atividades mais estratégicas e criativas. É um complemento inteligente."
+    "pergunta": "❌ E se eu quiser parar?",
+    "resposta": "Sem problemas. Cancelamento simples e sem taxas. Nós queremos que você fique porque está satisfeito, não preso. A primeira conversa é sempre gratuita."
   },
   {
     "id": 6,
-    "pergunta": "Funciona para qualquer tipo de empresa?",
-    "resposta": "Sim! Já implementamos soluções para e-commerce, clínicas, escritórios, imobiliárias, consultorias e muito mais. Cada agente é único."
+    "pergunta": "💰 Quanto custa um agente IA comparado a um funcionário?",
+    "resposta": "Um agente IA custa em média 70-80% menos que um funcionário CLT, trabalha 24/7 sem férias ou benefícios, e não comete erros por cansaço."
+  },
+  {
+    "id": 7,
+    "pergunta": "🏢 Funciona para qualquer tipo de empresa?",
+    "resposta": "Sim! Já implementamos soluções para e-commerce, clínicas, escritórios, imobiliárias, consultorias, salões, petshops e muito mais. Cada agente é único e personalizado."
+  },
+  {
+    "id": 8,
+    "pergunta": "🔄 O agente substitui completamente funcionários?",
+    "resposta": "Não necessariamente. Ele automatiza tarefas repetitivas, liberando sua equipe para atividades mais estratégicas e criativas. É um complemento inteligente que potencializa seu time."
   }
 ]

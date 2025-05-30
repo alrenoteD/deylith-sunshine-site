@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Services from '../components/Services';
 import Benefits from '../components/Benefits';
+import HowItWorks from '../components/HowItWorks';
 import EconomySimulator from '../components/EconomySimulator';
 import Charts from '../components/Charts';
 import UseCases from '../components/UseCases';
@@ -61,13 +62,16 @@ const Index = () => {
           <Services />
           <Benefits />
           
-          {/* Economy Simulator - NEW */}
+          {/* How It Works - NEW */}
+          <HowItWorks />
+          
+          {/* Economy Simulator */}
           <EconomySimulator />
           
           <Charts />
           
           {/* Use Cases section with updated gradient */}
-          <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/30 dark:via-amber-900/30 dark:to-yellow-900/30">
+          <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 dark:from-orange-900/30 dark:via-amber-900/30 dark:to-rose-900/30">
             <UseCases />
           </section>
           

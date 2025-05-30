@@ -1,9 +1,16 @@
 
 import { Card, CardContent } from '@/components/ui/card';
+import { Rocket, Target, BarChart3 } from 'lucide-react';
 import contentData from '../data/content.json';
 
 const About = () => {
   const { about } = contentData;
+
+  const iconMap = {
+    "🚀 Inovação": Rocket,
+    "🎯 Personalização": Target,
+    "📊 Resultados": BarChart3,
+  };
 
   return (
     <section id="about" className="py-20 bg-background">
@@ -12,32 +19,48 @@ const About = () => {
           <h2 className="text-3xl md:text-5xl font-bold mb-6 gradient-text">
             {about.title}
           </h2>
-          <p className="text-lg md:text-xl text-foreground/80 leading-relaxed">
+          <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">
             {about.description}
           </p>
+          
+          {/* Mission Statement */}
+          <div className="glass-card p-6 md:p-8 mb-8 text-left">
+            <h3 className="text-xl md:text-2xl font-semibold mb-4 gradient-text">🤖 O que fazemos</h3>
+            <p className="text-foreground/80 leading-relaxed mb-4">
+              {about.mission}
+            </p>
+            <div className="bg-primary/5 rounded-lg p-4 border-l-4 border-primary">
+              <p className="text-sm md:text-base text-foreground/70 italic">
+                {about.tools}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 animate-slide-in-left">
-          {about.values.map((value, index) => (
-            <Card
-              key={index}
-              className="glass-effect hover:scale-105 transition-all duration-300 border-primary/20"
-            >
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 daylight-gradient rounded-full flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">
-                    {value.title.charAt(0)}
-                  </span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {value.title}
-                </h3>
-                <p className="text-foreground/70">
-                  {value.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {about.values.map((value, index) => {
+            const IconComponent = iconMap[value.title as keyof typeof iconMap] || Target;
+            
+            return (
+              <Card
+                key={index}
+                className="glass-card hover:scale-105 transition-all duration-300 border-primary/20 group"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300">
+                    <IconComponent className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    {value.title}
+                  </h3>
+                  <p className="text-foreground/70 leading-relaxed">
+                    {value.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
