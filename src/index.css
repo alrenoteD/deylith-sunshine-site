@@ -162,7 +162,7 @@
   }
 
   .stats-card {
-    @apply glass-card p-6 text-center hover:scale-105 transition-all duration-300 group;
+    @apply glass-card p-6 text-center hover:scale-105 transition-all duration-300;
   }
 
   .stats-card::after {
