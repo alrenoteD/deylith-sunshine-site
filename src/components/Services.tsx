@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from '@/components/ui/card';
-import { MessageCircle, Target, Settings, Brain } from 'lucide-react';
+import { MessageCircle, Target, Settings, Brain, Calendar, Building } from 'lucide-react';
 import contentData from '../data/content.json';
 
 const iconMap = {
@@ -8,6 +8,8 @@ const iconMap = {
   target: Target,
   settings: Settings,
   brain: Brain,
+  calendar: Calendar,
+  building: Building,
 };
 
 const Services = () => {
@@ -25,9 +27,10 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.items.map((service, index) => {
-            const IconComponent = iconMap[service.icon as keyof typeof iconMap];
+            // Fallback to MessageCircle if icon is not found in the map
+            const IconComponent = iconMap[service.icon as keyof typeof iconMap] || MessageCircle;
             
             return (
               <Card
