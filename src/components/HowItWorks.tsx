@@ -4,7 +4,13 @@ import { MessageCircle, Cog, BookOpen, Rocket, BarChart3 } from 'lucide-react';
 import contentData from '../data/content.json';
 
 const HowItWorks = () => {
-  const { howItWorks } = contentData;
+  // Add safety check for howItWorks data
+  const howItWorksData = contentData?.howItWorks;
+  
+  if (!howItWorksData) {
+    console.log('HowItWorks data not found in contentData');
+    return null;
+  }
 
   const iconMap = {
     "1": MessageCircle,
@@ -19,17 +25,17 @@ const HowItWorks = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 gradient-text">
-            {howItWorks.title}
+            {howItWorksData.title || "Como Funciona"}
           </h2>
           <p className="text-lg md:text-xl text-foreground/80">
-            {howItWorks.subtitle}
+            {howItWorksData.subtitle || "Processo simples e eficiente"}
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-5 gap-6">
-            {howItWorks.steps.map((step, index) => {
-              const IconComponent = iconMap[step.number as keyof typeof iconMap];
+            {(howItWorksData.steps || []).map((step, index) => {
+              const IconComponent = iconMap[step.number as keyof typeof iconMap] || MessageCircle;
               
               return (
                 <div
@@ -37,29 +43,29 @@ const HowItWorks = () => {
                   className="relative"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <Card className="glass-card hover:scale-105 transition-all duration-300 border-primary/20 group h-full">
+                  <Card className="glass-card hover:scale-105 transition-all duration-300 border-primary/20 h-full">
                     <CardContent className="p-6 text-center">
                       <div className="relative mb-4">
-                        <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300">
                           <IconComponent className="w-8 h-8 text-white" />
                         </div>
                         <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                          {step.number}
+                          {step.number || index + 1}
                         </div>
                       </div>
                       
-                      <h3 className="text-lg font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
-                        {step.title}
+                      <h3 className="text-lg font-semibold mb-3 text-foreground hover:text-primary transition-colors">
+                        {step.title || `Passo ${index + 1}`}
                       </h3>
                       
                       <p className="text-foreground/70 text-sm leading-relaxed">
-                        {step.description}
+                        {step.description || "Descrição do passo"}
                       </p>
                     </CardContent>
                   </Card>
                   
                   {/* Connector line */}
-                  {index < howItWorks.steps.length - 1 && (
+                  {index < (howItWorksData.steps || []).length - 1 && (
                     <div className="hidden md:block absolute top-8 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 z-10"></div>
                   )}
                 </div>

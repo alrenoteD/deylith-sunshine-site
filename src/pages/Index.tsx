@@ -24,18 +24,27 @@ const Index = () => {
   });
 
   useEffect(() => {
+    console.log('Index component mounting...');
     setMounted(true);
     
     // Load custom sections
     const savedSections = localStorage.getItem('customSections');
     if (savedSections) {
-      setCustomSections(JSON.parse(savedSections));
+      try {
+        setCustomSections(JSON.parse(savedSections));
+      } catch (error) {
+        console.error('Error parsing custom sections:', error);
+      }
     }
 
     // Load theme settings
     const savedTheme = localStorage.getItem('themeSettings');
     if (savedTheme) {
-      setThemeSettings(JSON.parse(savedTheme));
+      try {
+        setThemeSettings(JSON.parse(savedTheme));
+      } catch (error) {
+        console.error('Error parsing theme settings:', error);
+      }
     }
   }, []);
 
@@ -46,6 +55,8 @@ const Index = () => {
   if (!mounted) {
     return null;
   }
+
+  console.log('Rendering Index component...');
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
