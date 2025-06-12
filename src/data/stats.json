@@ -5,10 +5,10 @@
       "category": "2-3 Funcionários CLT",
       "salario": 7000,
       "beneficios": 2400,
-      "encargos": 2800,
-      "total": 12200,
+      "encargos": 3388,
+      "total": 12788,
       "availability": "8h/dia, 5 dias",
-      "description": "Custo de 2-3 funcionários trabalhando 40h/semana"
+      "description": "Custo real: salários + encargos (48,4%) + benefícios"
     },
     {
       "category": "1 Agente IA",
@@ -17,7 +17,7 @@
       "encargos": 1000,
       "total": 1000,
       "availability": "24h/dia, 7 dias",
-      "description": "Agente trabalhando 168h/semana (valor exemplo)"
+      "description": "Agente trabalhando 168h/semana"
     }
   ],
   "roi": [
@@ -31,37 +31,37 @@
     {
       "month": "Mês 2",
       "investment": -1000,
-      "savings": 4000,
-      "net": 0,
+      "savings": 6000,
+      "net": 2000,
       "description": "Ajustes e treinamento"
     },
     {
       "month": "Mês 3",
       "investment": -1000,
-      "savings": 6000,
-      "net": 5000,
+      "savings": 9000,
+      "net": 10000,
       "description": "Operação estabilizada"
     },
     {
       "month": "Mês 4",
       "investment": -1000,
-      "savings": 8000,
-      "net": 12000,
+      "savings": 11000,
+      "net": 20000,
       "description": "Ganhos de escala"
     },
     {
       "month": "Mês 5",
       "investment": -1000,
-      "savings": 10000,
-      "net": 21000,
+      "savings": 11500,
+      "net": 30500,
       "description": "Otimizações aplicadas"
     },
     {
       "month": "Mês 6",
       "investment": -1000,
-      "savings": 12000,
-      "net": 32000,
-      "description": "ROI consolidado"
+      "savings": 11788,
+      "net": 41288,
+      "description": "ROI consolidado - economia máxima"
     }
   ],
   "capabilities": [

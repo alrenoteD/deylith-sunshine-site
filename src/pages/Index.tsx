@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { ThemeProvider } from 'next-themes';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import About from '../components/About';
@@ -26,6 +25,9 @@ const Index = () => {
   useEffect(() => {
     console.log('Index component mounting...');
     setMounted(true);
+    
+    // Force dark theme
+    document.documentElement.classList.add('dark');
     
     // Load custom sections
     const savedSections = localStorage.getItem('customSections');
@@ -59,62 +61,60 @@ const Index = () => {
   console.log('Rendering Index component...');
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <div className="min-h-screen bg-background text-foreground">
-        <Header />
-        <main>
-          <Hero />
-          
-          {/* About section with updated gradient */}
-          <section className="py-16 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/30 dark:via-teal-900/30 dark:to-cyan-900/30">
-            <About />
-          </section>
-          
-          <Services />
-          <Benefits />
-          
-          {/* How It Works - NEW */}
-          <HowItWorks />
-          
-          {/* Economy Simulator */}
-          <EconomySimulator />
-          
-          <Charts />
-          
-          {/* Use Cases section with updated gradient */}
-          <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 dark:from-orange-900/30 dark:via-amber-900/30 dark:to-rose-900/30">
-            <UseCases />
-          </section>
-          
-          {/* Custom Sections */}
-          {customSections
-            .filter((section: any) => section.enabled)
-            .map((section: any) => (
-              <CustomSection
-                key={section.id}
-                title={section.title}
-                content={section.content}
-                backgroundColor={section.backgroundColor}
-                textColor={section.textColor}
-                showCard={section.showCard}
-              />
-            ))}
-          
-          <FAQ />
-        </main>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Header />
+      <main>
+        <Hero />
         
-        {/* Footer with updated gradient */}
-        <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-black dark:from-slate-950 dark:via-gray-950 dark:to-black">
-          <Footer />
-        </div>
+        {/* About section with updated gradient */}
+        <section className="py-16 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/30 dark:via-teal-900/30 dark:to-cyan-900/30">
+          <About />
+        </section>
         
-        <RobotHead 
-          primaryColor={themeSettings.robotPrimaryColor}
-          secondaryColor={themeSettings.robotSecondaryColor}
-          onChatClick={handleChatClick} 
-        />
+        <Services />
+        <Benefits />
+        
+        {/* How It Works - NEW */}
+        <HowItWorks />
+        
+        {/* Economy Simulator */}
+        <EconomySimulator />
+        
+        <Charts />
+        
+        {/* Use Cases section with updated gradient */}
+        <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 dark:from-orange-900/30 dark:via-amber-900/30 dark:to-rose-900/30">
+          <UseCases />
+        </section>
+        
+        {/* Custom Sections */}
+        {customSections
+          .filter((section: any) => section.enabled)
+          .map((section: any) => (
+            <CustomSection
+              key={section.id}
+              title={section.title}
+              content={section.content}
+              backgroundColor={section.backgroundColor}
+              textColor={section.textColor}
+              showCard={section.showCard}
+            />
+          ))}
+        
+        <FAQ />
+      </main>
+      
+      {/* Footer with updated gradient */}
+      <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-black dark:from-slate-950 dark:via-gray-950 dark:to-black">
+        <Footer />
       </div>
-    </ThemeProvider>
+      
+      <RobotHead 
+        primaryColor={themeSettings.robotPrimaryColor}
+        secondaryColor={themeSettings.robotSecondaryColor}
+        onChatClick={handleChatClick} 
+      />
+    </div>
   );
 };
 

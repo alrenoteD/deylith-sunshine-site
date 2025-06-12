@@ -60,7 +60,7 @@ const Charts = () => {
                 Comparativo de Custos Mensais
               </CardTitle>
               <p className="text-sm text-center text-foreground/60">
-                Exemplo: Agente de R$ 1.000/mês vs 2-3 Funcionários
+                Exemplo: Agente de R$ 1.000/mês vs 2-3 Funcionários (R$ 12.788)
               </p>
             </CardHeader>
             <CardContent>
@@ -98,7 +98,7 @@ const Charts = () => {
                 </BarChart>
               </ResponsiveContainer>
               <p className="text-center text-sm text-foreground/70 mt-4">
-                Economia potencial de <span className="text-tech-purple font-bold">R$ 11.200/mês</span>
+                Economia potencial de <span className="text-tech-purple font-bold">R$ 11.788/mês</span>
               </p>
             </CardContent>
           </Card>
@@ -154,14 +154,14 @@ const Charts = () => {
           </Card>
         </div>
 
-        {/* ROI Timeline with detailed explanation */}
+        {/* ROI Timeline with corrected values */}
         <Card className="glass-effect border-primary/20 animate-fade-in tech-card neon-glow mb-8">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-center gradient-text">
               Projeção de ROI - 6 Meses
             </CardTitle>
             <p className="text-sm text-center text-foreground/60">
-              Baseado em agente de R$ 1.000/mês com economia de R$ 11.200/mês
+              Baseado em agente de R$ 1.000/mês com economia de até R$ 11.788/mês
             </p>
           </CardHeader>
           <CardContent>
@@ -210,10 +210,10 @@ const Charts = () => {
               </LineChart>
             </ResponsiveContainer>
             
-            {/* Detailed ROI Logic Explanation */}
+            {/* Corrected ROI Logic Explanation */}
             <div className="mt-8 space-y-6">
               <h4 className="text-xl font-bold gradient-text text-center mb-6">
-                📊 Metodologia de Cálculo do ROI
+                📊 Metodologia de Cálculo do ROI (Corrigida)
               </h4>
               
               {/* Formula */}
@@ -225,32 +225,32 @@ const Charts = () => {
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div className="text-center">
                     <div className="font-semibold text-green-400">Economia Total</div>
-                    <div className="text-foreground/70">Soma das economias mensais acumuladas</div>
+                    <div className="text-foreground/70">Até R$ 11.788/mês no 6º mês</div>
                   </div>
                   <div className="text-center">
                     <div className="font-semibold text-red-400">Investimento Total</div>
-                    <div className="text-foreground/70">Desenvolvimento + Manutenção mensal</div>
+                    <div className="text-foreground/70">R$ 5.000 inicial + R$ 1.000/mês</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-purple-400">ROI Final</div>
-                    <div className="text-foreground/70">Retorno percentual sobre investimento</div>
+                    <div className="font-semibold text-purple-400">ROI 6º Mês</div>
+                    <div className="text-foreground/70">276% sobre investimento</div>
                   </div>
                 </div>
               </div>
 
-              {/* Step by step calculation */}
+              {/* Step by step calculation with corrected values */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h5 className="text-lg font-semibold gradient-text">🔢 Componentes do Cálculo</h5>
+                  <h5 className="text-lg font-semibold gradient-text">🔢 Componentes do Cálculo (Corrigidos)</h5>
                   
                   <div className="space-y-3">
                     <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                       <div className="font-semibold text-blue-400 mb-2">1. Custo CLT (Mensal)</div>
                       <ul className="text-sm space-y-1 text-foreground/70">
                         <li>• Salários: R$ 7.000 (2-3 funcionários)</li>
-                        <li>• Benefícios (40%): R$ 2.800</li>
-                        <li>• Encargos (80%): R$ 5.600</li>
-                        <li><strong>Total: R$ 15.400</strong></li>
+                        <li>• Encargos (48,4%): R$ 3.388</li>
+                        <li>• Benefícios: R$ 2.400</li>
+                        <li><strong>Total: R$ 12.788</strong></li>
                       </ul>
                     </div>
                     
@@ -260,7 +260,7 @@ const Charts = () => {
                         <li>• Desenvolvimento: R$ 5.000 (primeiro mês)</li>
                         <li>• Manutenção: R$ 1.000/mês</li>
                         <li>• Hosting e APIs: Inclusos</li>
-                        <li><strong>Economia: R$ 14.400/mês</strong></li>
+                        <li><strong>Economia: R$ 11.788/mês</strong></li>
                       </ul>
                     </div>
                   </div>
@@ -271,23 +271,23 @@ const Charts = () => {
                   
                   <div className="space-y-3">
                     <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <div className="font-semibold text-yellow-400 mb-2">Meses 1-2: Implementação</div>
+                      <div className="font-semibold text-yellow-400 mb-2">Mês 1: Desenvolvimento</div>
                       <div className="text-sm text-foreground/70">
-                        Economia gradual conforme sistema é ajustado e otimizado
+                        Investimento de R$ 5.000 + economia parcial de R$ 2.000
                       </div>
                     </div>
                     
                     <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                      <div className="font-semibold text-purple-400 mb-2">Meses 3-6: Operação Plena</div>
+                      <div className="font-semibold text-purple-400 mb-2">Meses 2-5: Otimização</div>
                       <div className="text-sm text-foreground/70">
-                        Economia máxima atingida. Sistema operando 24/7 com eficiência total
+                        Economia crescente de R$ 6.000 até R$ 11.500/mês
                       </div>
                     </div>
                     
                     <div className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
-                      <div className="font-semibold text-cyan-400 mb-2">ROI no 6º Mês</div>
+                      <div className="font-semibold text-cyan-400 mb-2">Mês 6: Máximo</div>
                       <div className="text-sm text-foreground/70">
-                        <strong>320% de retorno</strong> = R$ 32.000 ganho para R$ 10.000 investidos
+                        <strong>R$ 41.288 acumulado</strong> para R$ 11.000 investidos
                       </div>
                     </div>
                   </div>
